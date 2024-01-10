@@ -13,7 +13,7 @@ namespace BillsPlugin.Handlers
         public void OnExplodingGrenade(ExplodingGrenadeEventArgs ev)
         {
 
-            if (!BillsPlugin.Instance.Config.TeslagateDisabledByGrenade)
+            if (!BillsPlugin.Instance.Config.TeslaGateDisabledByGrenade)
             {
                 return;
             }
@@ -27,9 +27,14 @@ namespace BillsPlugin.Handlers
                     continue;
                 }
 
-                teslaGate.InactiveTime = Math.Max(0, BillsPlugin.Instance.Config.TeslagateDisabledTime);
+                Log.Info($"Map {teslaGate.transform.childCount}");
+                teslaGate.InactiveTime = Math.Max(0, BillsPlugin.Instance.Config.TeslaGateDisabledTime);
                 teslaGate.isIdling = false;
                 teslaGate.ServerSideIdle(false);
+
+                var obj = new GameObject();
+                obj.transform.parent = teslaGate.transform;
+                obj.transform.name = "InactiveGate";
             }
         }
 

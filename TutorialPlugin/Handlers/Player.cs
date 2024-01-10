@@ -14,7 +14,13 @@ namespace BillsPlugin.Handlers
 
         public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (BillsPlugin.Instance.Config.TeslagateBypass.Contains(ev.Player.RoleManager.CurrentRole.RoleTypeId
+
+            if (ev.Tesla.IsShocking)
+            {
+                return;
+            }
+
+            if (BillsPlugin.Instance.Config.TeslaGateBypass.Contains(ev.Player.RoleManager.CurrentRole.RoleTypeId
                     .ToString()))
             {
                 ev.IsTriggerable = false;

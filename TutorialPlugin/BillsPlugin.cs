@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
 using Map = Exiled.Events.Handlers.Map;
+using Scp079 = Exiled.Events.Handlers.Scp079;
 using Log = PluginAPI.Core.Log;
 
 namespace BillsPlugin
@@ -25,6 +26,7 @@ namespace BillsPlugin
         private Handlers.Player player;
         private Handlers.Server server;
         private Handlers.Map map;
+        private Handlers.Scp079 scp079;
 
         private BillsPlugin() { }
 
@@ -43,6 +45,7 @@ namespace BillsPlugin
             player = new Handlers.Player();
             server = new Handlers.Server();
             map = new Handlers.Map();
+            scp079 = new Handlers.Scp079();
 
             //Server.WaitingForPlayers += server.OnWaitingForPlayers;
             //Server.RoundStarted += server.OnRoundStarted;
@@ -53,6 +56,8 @@ namespace BillsPlugin
             Player.TriggeringTesla += player.OnTriggeringTesla;
             
             Map.ExplodingGrenade += map.OnExplodingGrenade;
+
+            Scp079.InteractingTesla += scp079.OnInteractingTesla;
         }
 
         public void UnregisterEvents()
@@ -67,9 +72,12 @@ namespace BillsPlugin
 
             Map.ExplodingGrenade -= map.OnExplodingGrenade;
 
+            Scp079.InteractingTesla -= scp079.OnInteractingTesla;
+
             player = null;
             server = null;
             map = null;
+            scp079 = null;
         }
 
     }
