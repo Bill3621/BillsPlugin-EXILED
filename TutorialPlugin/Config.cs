@@ -21,7 +21,7 @@ namespace BillsPlugin
         public bool TeslaGateDisabledByGrenade { get; set; } = true;
 
         [Description("Sets the time in seconds the tesla gate should get disabled. Requires tesla_gate_disabled_by_grenade set to true.")]
-        public int TeslaGateDisabledTime { get; set; } = 5;
+        public int TeslaGateDisabledTime { get; set; } = 10;
 
 
         [Description("Sets the roles which can will not trigger the tesla gates. Valid roles: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard, Scientist, ClassD, ChaosConscript, ChaosRifleman, ChaosMaraudder, ChaosRepressor, Scp173, Scp106, Scp049, Scp079, Scp096, Scp0492, Scp939, Scp3114, Flamingo, AlphaFlamingo, ZombieFlamingo, Tutorial")]
