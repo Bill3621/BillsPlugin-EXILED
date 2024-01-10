@@ -14,7 +14,7 @@ namespace BillsPlugin.Handlers
     {
         public void OnInteractingTesla(InteractingTeslaEventArgs ev)
         {
-            var obj = ev.Tesla.Transform.Find("InactiveGate").gameObject;
+            var obj = ev.Tesla.Transform.Find("InactiveGate");
             if (obj == null)
             {
                 return;
@@ -26,7 +26,7 @@ namespace BillsPlugin.Handlers
             } 
             else
             {
-                UnityEngine.Object.Destroy(obj);
+                UnityEngine.Object.Destroy(obj.gameObject);
             }
         }
     }

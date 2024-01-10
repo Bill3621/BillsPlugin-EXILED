@@ -49,12 +49,8 @@ namespace BillsPlugin
             map = new Handlers.Map();
             scp079 = new Handlers.Scp079();
 
-            //Server.WaitingForPlayers += server.OnWaitingForPlayers;
             Server.RoundStarted += server.OnRoundStarted;
 
-            //Player.Left += player.OnLeft;
-            //Player.Joined += player.OnJoined;
-            //Player.InteractingDoor += player.OnInteractingDoor;
             Player.TriggeringTesla += player.OnTriggeringTesla;
             Player.Spawned += player.OnSpawned;
             
@@ -65,12 +61,8 @@ namespace BillsPlugin
 
         public void UnregisterEvents()
         {
-            //Server.WaitingForPlayers -= server.OnWaitingForPlayers;
             Server.RoundStarted -= server.OnRoundStarted;
 
-            //Player.Left -= player.OnLeft;
-            //Player.Joined -= player.OnJoined;
-            //Player.InteractingDoor -= player.OnInteractingDoor;
             Player.TriggeringTesla -= player.OnTriggeringTesla;
             Player.Spawned -= player.OnSpawned;
 

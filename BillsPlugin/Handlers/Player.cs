@@ -35,26 +35,5 @@ namespace BillsPlugin.Handlers
                 ev.Player.IsGodModeEnabled = false;
             }
         }
-
-        //public void OnLeft(LeftEventArgs ev)
-        //{
-        //string message = TutorialPlugin.Instance.Config.LeftMessage.Replace("{player}", ev.Player.Nickname);
-        //Map.Broadcast(6, message);
-        //}
-
-        //public void OnJoined(JoinedEventArgs ev)
-        //{
-        //string message = TutorialPlugin.Instance.Config.JoinedMessage.Replace("{player}", ev.Player.Nickname);
-        //Map.Broadcast(6, message);
-        //}
-
-        //public void OnInteractingDoor(InteractingDoorEventArgs ev)
-        //{
-        //    if(ev.IsAllowed == false)
-        //    {
-        //        ev.Player.Broadcast(6, TutorialPlugin.Instance.Config.BoobyTrapMessage);
-        //        ev.Player.Kill(DamageType.Poison);
-        //    }
-        //}
     }
 }

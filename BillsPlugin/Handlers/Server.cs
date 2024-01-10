@@ -10,14 +10,8 @@ namespace BillsPlugin.Handlers
 {
     class Server
     {
-        /*public void OnWaitingForPlayers()
-        {
-            Log.Info("Waiting for players...");
-        }*/
-
         public void OnRoundStarted()
         {
-            //Map.Broadcast(6, TutorialPlugin.Instance.Config.RoundStartedMessage);
             Updater.CheckForUpdate();
             if (!Updater.UpdateAvailable)
             {

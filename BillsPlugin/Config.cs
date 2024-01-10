@@ -29,18 +29,5 @@ namespace BillsPlugin
 
         [Description("Sets if god mode should get disabled on team change.")]
         public bool DisableGodModeOnTeamChange { get; set; } = true;
-
-        //[Description("Sets the message for when someone joins the server. {player} will be replaced with the players name.")]
-        //public string JoinedMessage { get; set; } = "{player} has joined the server.";
-
-        //[Description("Sets the message for when someone leaves the server. {player} will be replaced with the players name.")]
-        //public string LeftMessage { get; set; } = "{player} has left the server.";
-
-        //[Description("Sets the message for when the round starts.")]
-        //public string RoundStartedMessage { get; set; } = "uwu :3";
-
-
-        //[Description("Sets the message for when someone triggers a trap.")]
-        //public string BoobyTrapMessage { get; set; } = "You have activated my trap card!";
     }
 }
