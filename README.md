@@ -8,6 +8,7 @@ This Plugin is a powerful addition to [SCP: Secret Laboratory](https://scpslgame
 - **Convenient Commands:**
   - Trigger the closest Tesla Gate with a simple command.
   - Spawn SPC-018 on a specified player.
+- **Automatic God Mode Disable:** Sets wheter god mod should get disabled on team change (on spawn).
 
 ## Automatic Update Check
 The Plugin includes an automatic update check feature, ensuring you stay up-to-date with the latest improvements and fixes. The plugin will periodically check for updates and notify you when a new version is available.
