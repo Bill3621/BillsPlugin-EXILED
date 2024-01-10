@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using PluginAPI.Core;
-using Utf8Json;
-using YamlDotNet.Core;
-using static UnityWebRequestDispatcher;
 
 namespace BillsPlugin
 {
     public class Updater
     {
 
-        public static readonly string CurrentVersion = "v0.0.0";
+        public static readonly string CurrentVersion = "v0.0.2";
         public static string NewestVersion = null;
         public static bool UpdateAvailable = false;
 
