@@ -28,6 +28,14 @@ namespace BillsPlugin.Handlers
             }
         }
 
+        public void OnSpawned(SpawnedEventArgs ev)
+        {
+            if (BillsPlugin.Instance.Config.DisableGodModeOnTeamChange)
+            {
+                ev.Player.IsGodModeEnabled = false;
+            }
+        }
+
         //public void OnLeft(LeftEventArgs ev)
         //{
         //string message = TutorialPlugin.Instance.Config.LeftMessage.Replace("{player}", ev.Player.Nickname);

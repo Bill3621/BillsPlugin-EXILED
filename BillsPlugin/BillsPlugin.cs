@@ -56,6 +56,7 @@ namespace BillsPlugin
             //Player.Joined += player.OnJoined;
             //Player.InteractingDoor += player.OnInteractingDoor;
             Player.TriggeringTesla += player.OnTriggeringTesla;
+            Player.Spawned += player.OnSpawned;
             
             Map.ExplodingGrenade += map.OnExplodingGrenade;
 
@@ -71,6 +72,7 @@ namespace BillsPlugin
             //Player.Joined -= player.OnJoined;
             //Player.InteractingDoor -= player.OnInteractingDoor;
             Player.TriggeringTesla -= player.OnTriggeringTesla;
+            Player.Spawned -= player.OnSpawned;
 
             Map.ExplodingGrenade -= map.OnExplodingGrenade;
 

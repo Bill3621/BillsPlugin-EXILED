@@ -27,6 +27,9 @@ namespace BillsPlugin
         [Description("Sets the roles which can will not trigger the tesla gates. Valid roles: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard, Scientist, ClassD, ChaosConscript, ChaosRifleman, ChaosMaraudder, ChaosRepressor, Scp173, Scp106, Scp049, Scp079, Scp096, Scp0492, Scp939, Scp3114, Flamingo, AlphaFlamingo, ZombieFlamingo, Tutorial")]
         public List<string> TeslaGateBypass { get; set; } = new List<string> { "NtfSpecialist", "NtfSergeant", "NtfCaptain", "NtfPrivate"};
 
+        [Description("Sets if god mode should get disabled on team change.")]
+        public bool DisableGodModeOnTeamChange { get; set; } = true;
+
         //[Description("Sets the message for when someone joins the server. {player} will be replaced with the players name.")]
         //public string JoinedMessage { get; set; } = "{player} has joined the server.";
 
