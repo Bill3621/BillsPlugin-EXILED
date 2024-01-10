@@ -26,8 +26,6 @@ namespace BillsPlugin.Handlers
                 {
                     continue;
                 }
-
-                Log.Info($"Map {teslaGate.transform.childCount}");
                 teslaGate.InactiveTime = Math.Max(0, BillsPlugin.Instance.Config.TeslaGateDisabledTime);
                 teslaGate.isIdling = false;
                 teslaGate.ServerSideIdle(false);
