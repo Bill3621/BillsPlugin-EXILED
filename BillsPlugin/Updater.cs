@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Runtime.Remoting.Contexts;
+using System.Text;
+using System.Threading.Tasks;
+using PluginAPI.Core;
+using Utf8Json;
+using YamlDotNet.Core;
+using static UnityWebRequestDispatcher;
+
+namespace BillsPlugin
+{
+    public class Updater
+    {
+
+        public static readonly string CurrentVersion = "v0.0.0";
+        public static string NewestVersion = null;
+        public static bool UpdateAvailable = false;
+
+        public static void CheckForUpdate()
+        {
+            if (UpdateAvailable)
+            {
+                PrintUpdateMessage();
+                return;
+            }
+            var httpWebRequest =
+                (HttpWebRequest)WebRequest.Create(
+                    "https://api.github.com/repos/Bill3621/BillsPlugin-EXILED/releases/latest");
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Accept = "application/json";
+            httpWebRequest.ContentType = "application/json; charset=utf-8;";
+            httpWebRequest.UserAgent =
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+
+            try
+            {
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd().Replace(" ", "");
+                    Log.Debug("Parsing github result...");
+                    NewestVersion = Between(result, "tag_name\":\"", "\"");
+                    if (CurrentVersion.Equals(NewestVersion))
+                    {
+                        Log.Debug("Plugin is up to date.");
+                        return;
+                    }
+                    // New version
+                    UpdateAvailable = true;
+                    PrintUpdateMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error at checking for updates: " + ex.Message);
+            }
+        }
+
+        public static void PrintUpdateMessage()
+        {
+            Log.Warning("New version available: " + NewestVersion);
+            Log.Warning("Current version: " + CurrentVersion);
+            Log.Warning($"Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/download/{NewestVersion}/BillsPlugin.dll");
+        }
+
+        public static string Between(string str, string firstString, string lastString)
+        {
+            var pos1 = str.IndexOf(firstString) + firstString.Length;
+            var pos2 = str.IndexOf(lastString, pos1);
+            return str.Substring(pos1, pos2 - pos1);
+        }
+    }
+}

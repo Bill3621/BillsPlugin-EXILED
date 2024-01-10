@@ -33,6 +33,8 @@ namespace BillsPlugin
         public override void OnEnabled()
         {
             RegisterEvents();
+
+            Updater.CheckForUpdate();
         }
 
         public override void OnDisabled()
@@ -48,7 +50,7 @@ namespace BillsPlugin
             scp079 = new Handlers.Scp079();
 
             //Server.WaitingForPlayers += server.OnWaitingForPlayers;
-            //Server.RoundStarted += server.OnRoundStarted;
+            Server.RoundStarted += server.OnRoundStarted;
 
             //Player.Left += player.OnLeft;
             //Player.Joined += player.OnJoined;
@@ -63,7 +65,7 @@ namespace BillsPlugin
         public void UnregisterEvents()
         {
             //Server.WaitingForPlayers -= server.OnWaitingForPlayers;
-            // Server.RoundStarted -= server.OnRoundStarted;
+            Server.RoundStarted -= server.OnRoundStarted;
 
             //Player.Left -= player.OnLeft;
             //Player.Joined -= player.OnJoined;

@@ -13,7 +13,7 @@ namespace BillsPlugin
 
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; } = false;
-        
+
         [Description("Sets how many balls will spawn when using the balls command.")]
         public int BallAmount { get; set; } = 1;
 

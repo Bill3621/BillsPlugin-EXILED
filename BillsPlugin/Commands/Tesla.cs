@@ -30,7 +30,7 @@ namespace BillsPlugin.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if(!sender.CheckPermission(PlayerPermissions.GivingItems, out response))
+            if(!sender.CheckPermission(PlayerPermissions.GameplayData, out response))
             {
                 return false;
             }

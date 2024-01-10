@@ -126,6 +126,7 @@
     <Compile Include="Handlers\Server.cs" />
     <Compile Include="BillsPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
