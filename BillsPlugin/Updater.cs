@@ -56,7 +56,7 @@ namespace BillsPlugin
         {
             Log.Warning("New version available: " + NewestVersion);
             Log.Warning("Current version: " + CurrentVersion);
-            Log.Warning($"Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/download/{NewestVersion}/BillsPlugin.dll");
+            Log.Warning($"Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/latest");
         }
 
         public static string Between(string str, string firstString, string lastString)
