@@ -22,4 +22,4 @@ Bills Plugin introduces the following commands to enhance gameplay:
 For assistance, bug reports, or general inquiries, please visit our [GitHub repository](https://github.com/Bill3621/BillsPlugin-EXILED/). We appreciate your feedback and contributions!
 
 ## License
-This Plugin is released under the [GNU General Public License v3.0](LICENSE.md). Feel free to explore, modify, and share the code as per the terms of the license.
+This Plugin is released under the [GNU General Public License v3.0](LICENSE). Feel free to explore, modify, and share the code as per the terms of the license.
