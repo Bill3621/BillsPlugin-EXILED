@@ -67,8 +67,8 @@ namespace BillsPlugin
 
         public static string Between(string str, string firstString, string lastString)
         {
-            var pos1 = str.IndexOf(firstString) + firstString.Length;
-            var pos2 = str.IndexOf(lastString, pos1);
+            var pos1 = str.IndexOf(firstString, StringComparison.Ordinal) + firstString.Length;
+            var pos2 = str.IndexOf(lastString, pos1, StringComparison.Ordinal);
             return str.Substring(pos1, pos2 - pos1);
         }
     }
