@@ -1,6 +1,5 @@
 ﻿using CommandSystem;
 using Exiled.API.Features;
-using Exiled.API.Interfaces;
 using Footprinting;
 using InventorySystem;
 using InventorySystem.Items;
@@ -8,10 +7,7 @@ using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
 using Mirror;
 using PlayerRoles;
-using Respawning;
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 using Utils;
 

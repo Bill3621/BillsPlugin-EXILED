@@ -1,17 +1,10 @@
 ﻿using Exiled.API.Enums;
-using System;
 using Exiled.API.Features;
-using PlayerRoles;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
 using Map = Exiled.Events.Handlers.Map;
 using Scp079 = Exiled.Events.Handlers.Scp079;
-using Log = PluginAPI.Core.Log;
 
 namespace BillsPlugin
 {

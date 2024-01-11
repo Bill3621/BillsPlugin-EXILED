@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.Events.EventArgs.Scp079;
-using PluginAPI.Core;
-using UnityEngine;
+﻿using Exiled.Events.EventArgs.Scp079;
 
 namespace BillsPlugin.Handlers
 {

@@ -1,8 +1,5 @@
-﻿
-
-using System;
+﻿using System;
 using Exiled.Events.EventArgs.Map;
-using PluginAPI.Core;
 using UnityEngine;
 
 namespace BillsPlugin.Handlers
