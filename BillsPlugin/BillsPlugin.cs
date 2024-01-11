@@ -17,16 +17,14 @@ namespace BillsPlugin
 {
     public class BillsPlugin : Plugin<Config>
     {
-
-        private static readonly BillsPlugin Singleton = new BillsPlugin();
-        public static BillsPlugin Instance => Singleton;
+        public static BillsPlugin Instance { get; } = new BillsPlugin();
 
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
 
-        private Handlers.Player player;
-        private Handlers.Server server;
-        private Handlers.Map map;
-        private Handlers.Scp079 scp079;
+        private Handlers.Player _player;
+        private Handlers.Server _server;
+        private Handlers.Map _map;
+        private Handlers.Scp079 _scp079;
 
         private BillsPlugin() { }
 
@@ -44,36 +42,36 @@ namespace BillsPlugin
 
         public void RegisterEvents()
         {
-            player = new Handlers.Player();
-            server = new Handlers.Server();
-            map = new Handlers.Map();
-            scp079 = new Handlers.Scp079();
+            _player = new Handlers.Player();
+            _server = new Handlers.Server();
+            _map = new Handlers.Map();
+            _scp079 = new Handlers.Scp079();
 
-            Server.RoundStarted += server.OnRoundStarted;
+            Server.RoundStarted += _server.OnRoundStarted;
 
-            Player.TriggeringTesla += player.OnTriggeringTesla;
-            Player.Spawned += player.OnSpawned;
+            Player.TriggeringTesla += _player.OnTriggeringTesla;
+            Player.Spawned += _player.OnSpawned;
             
-            Map.ExplodingGrenade += map.OnExplodingGrenade;
+            Map.ExplodingGrenade += _map.OnExplodingGrenade;
 
-            Scp079.InteractingTesla += scp079.OnInteractingTesla;
+            Scp079.InteractingTesla += _scp079.OnInteractingTesla;
         }
 
         public void UnregisterEvents()
         {
-            Server.RoundStarted -= server.OnRoundStarted;
+            Server.RoundStarted -= _server.OnRoundStarted;
 
-            Player.TriggeringTesla -= player.OnTriggeringTesla;
-            Player.Spawned -= player.OnSpawned;
+            Player.TriggeringTesla -= _player.OnTriggeringTesla;
+            Player.Spawned -= _player.OnSpawned;
 
-            Map.ExplodingGrenade -= map.OnExplodingGrenade;
+            Map.ExplodingGrenade -= _map.OnExplodingGrenade;
 
-            Scp079.InteractingTesla -= scp079.OnInteractingTesla;
+            Scp079.InteractingTesla -= _scp079.OnInteractingTesla;
 
-            player = null;
-            server = null;
-            map = null;
-            scp079 = null;
+            _player = null;
+            _server = null;
+            _map = null;
+            _scp079 = null;
         }
 
     }
