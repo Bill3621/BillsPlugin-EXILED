@@ -31,7 +31,13 @@ namespace BillsPlugin
             try
             {
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                var responseStream = httpResponse.GetResponseStream();
+                if (responseStream == null)
+                {
+                    Log.Error($"Response from GitHub is null. Response status: {httpResponse.StatusDescription}");
+                    return;
+                }
+                using (var streamReader = new StreamReader(responseStream))
                 {
                     var result = streamReader.ReadToEnd().Replace(" ", "");
                     Log.Debug("Parsing github result...");
