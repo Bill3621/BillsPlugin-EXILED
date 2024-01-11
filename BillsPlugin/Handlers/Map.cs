@@ -4,25 +4,17 @@ using UnityEngine;
 
 namespace BillsPlugin.Handlers
 {
-    class Map
+    internal class Map
     {
-
         public void OnExplodingGrenade(ExplodingGrenadeEventArgs ev)
         {
+            if (!BillsPlugin.Instance.Config.TeslaGateDisabledByGrenade) return;
 
-            if (!BillsPlugin.Instance.Config.TeslaGateDisabledByGrenade)
-            {
-                return;
-            }
-
-            Vector3 position = ev.Position;
+            var position = ev.Position;
 
             foreach (var teslaGate in TeslaGateController.Singleton.TeslaGates)
             {
-                if (!teslaGate.IsInIdleRange(position))
-                {
-                    continue;
-                }
+                if (!teslaGate.IsInIdleRange(position)) continue;
                 teslaGate.InactiveTime = Math.Max(0, BillsPlugin.Instance.Config.TeslaGateDisabledTime);
                 teslaGate.isIdling = false;
                 teslaGate.ServerSideIdle(false);
@@ -32,6 +24,5 @@ namespace BillsPlugin.Handlers
                 obj.transform.name = "InactiveGate";
             }
         }
-
     }
 }

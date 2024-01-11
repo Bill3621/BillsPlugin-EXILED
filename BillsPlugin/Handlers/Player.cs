@@ -2,16 +2,11 @@
 
 namespace BillsPlugin.Handlers
 {
-    class Player
+    internal class Player
     {
-
         public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-
-            if (ev.Tesla.IsShocking)
-            {
-                return;
-            }
+            if (ev.Tesla.IsShocking) return;
 
             if (BillsPlugin.Instance.Config.TeslaGateBypass.Contains(ev.Player.RoleManager.CurrentRole.RoleTypeId
                     .ToString()))
@@ -23,10 +18,7 @@ namespace BillsPlugin.Handlers
 
         public void OnSpawned(SpawnedEventArgs ev)
         {
-            if (BillsPlugin.Instance.Config.DisableGodModeOnTeamChange)
-            {
-                ev.Player.IsGodModeEnabled = false;
-            }
+            if (BillsPlugin.Instance.Config.DisableGodModeOnTeamChange) ev.Player.IsGodModeEnabled = false;
         }
     }
 }

@@ -7,7 +7,6 @@ namespace BillsPlugin
 {
     public class Updater
     {
-
         public static readonly string CurrentVersion = "v0.0.3";
         public static string NewestVersion = null;
         public static bool UpdateAvailable = false;
@@ -19,6 +18,7 @@ namespace BillsPlugin
                 PrintUpdateMessage();
                 return;
             }
+
             var httpWebRequest =
                 (HttpWebRequest)WebRequest.Create(
                     "https://api.github.com/repos/Bill3621/BillsPlugin-EXILED/releases/latest");
@@ -37,6 +37,7 @@ namespace BillsPlugin
                     Log.Error($"Response from GitHub is null. Response status: {httpResponse.StatusDescription}");
                     return;
                 }
+
                 using (var streamReader = new StreamReader(responseStream))
                 {
                     var result = streamReader.ReadToEnd().Replace(" ", "");
@@ -47,6 +48,7 @@ namespace BillsPlugin
                         Log.Debug("Plugin is up to date.");
                         return;
                     }
+
                     // New version
                     UpdateAvailable = true;
                     PrintUpdateMessage();

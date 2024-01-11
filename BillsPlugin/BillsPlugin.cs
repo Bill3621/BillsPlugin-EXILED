@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
 using Map = Exiled.Events.Handlers.Map;
@@ -19,7 +18,9 @@ namespace BillsPlugin
         private Handlers.Map _map;
         private Handlers.Scp079 _scp079;
 
-        private BillsPlugin() { }
+        private BillsPlugin()
+        {
+        }
 
         public override void OnEnabled()
         {
@@ -44,7 +45,7 @@ namespace BillsPlugin
 
             Player.TriggeringTesla += _player.OnTriggeringTesla;
             Player.Spawned += _player.OnSpawned;
-            
+
             Map.ExplodingGrenade += _map.OnExplodingGrenade;
 
             Scp079.InteractingTesla += _scp079.OnInteractingTesla;
@@ -66,6 +67,5 @@ namespace BillsPlugin
             _map = null;
             _scp079 = null;
         }
-
     }
 }
