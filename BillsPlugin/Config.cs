@@ -10,14 +10,14 @@ namespace BillsPlugin
         public bool Debug { get; set; } = false;
 
         [Description("Sets how many balls will spawn when using the balls command.")]
-        public int BallAmount { get; set; } = 1;
+        public int BallAmount { get; set; } = 3;
 
         [Description("Sets if tesla gates should be disabled when hit by grenades.")]
         public bool TeslaGateDisabledByGrenade { get; set; } = true;
 
         [Description(
             "Sets the time in seconds the tesla gate should get disabled. Requires tesla_gate_disabled_by_grenade set to true.")]
-        public int TeslaGateDisabledTime { get; set; } = 10;
+        public int TeslaGateDisabledTime { get; set; } = 30;
 
 
         [Description(
