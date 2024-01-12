@@ -18,10 +18,14 @@ namespace BillsPlugin.Handlers
                 teslaGate.InactiveTime = Math.Max(0, BillsPlugin.Instance.Config.TeslaGateDisabledTime);
                 teslaGate.isIdling = false;
                 teslaGate.ServerSideIdle(false);
-
-                var obj = new GameObject();
-                obj.transform.parent = teslaGate.transform;
-                obj.transform.name = "InactiveGate";
+                _ = new GameObject
+                {
+                    transform =
+                    {
+                        parent = teslaGate.transform,
+                        name = "InactiveGate"
+                    }
+                };
             }
         }
     }

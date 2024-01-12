@@ -25,7 +25,7 @@ namespace BillsPlugin.Commands
 
         public string Description { get; } = "A command that spawns balls uwu";
 
-        public string[] Usage { get; } = new string[1] { "%player%" };
+        public string[] Usage { get; } = new string[] { "%player%" };
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {

@@ -1,14 +1,6 @@
-﻿using CommandSystem;
-using Exiled.API.Features;
-using Footprinting;
-using InventorySystem;
-using InventorySystem.Items;
-using InventorySystem.Items.Pickups;
-using InventorySystem.Items.ThrowableProjectiles;
-using Mirror;
+﻿using System;
+using CommandSystem;
 using PlayerRoles;
-using System;
-using UnityEngine;
 using Utils;
 
 namespace BillsPlugin.Commands
@@ -23,7 +15,7 @@ namespace BillsPlugin.Commands
         public string Description { get; } =
             "A command that triggers the nearest tesla gate of a given player (if in room / idle range)";
 
-        public string[] Usage { get; } = new string[1] { "%player%" };
+        public string[] Usage { get; } = new string[] { "%player%" };
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
