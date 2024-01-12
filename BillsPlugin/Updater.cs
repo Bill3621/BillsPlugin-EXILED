@@ -41,11 +41,12 @@ namespace BillsPlugin
                 using (var streamReader = new StreamReader(responseStream))
                 {
                     var result = streamReader.ReadToEnd().Replace(" ", "");
-                    Log.Debug("Parsing github result...");
+                    if (BillsPlugin.Instance.Config.Debug) Log.Debug("Parsing github result...");
                     NewestVersion = Between(result, "tag_name\":\"", "\"");
                     if (CurrentVersion.Equals(NewestVersion))
                     {
-                        Log.Debug("Plugin is up to date.");
+                        if (BillsPlugin.Instance.Config.Debug) Log.Debug("Plugin is up to date.");
+
                         return;
                     }
 
