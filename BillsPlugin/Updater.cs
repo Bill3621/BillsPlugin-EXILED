@@ -7,7 +7,7 @@ namespace BillsPlugin
 {
     public class Updater
     {
-        public static readonly string CurrentVersion = "v0.0.4";
+        public static readonly string CurrentVersion = "v0.0.5";
         public static string NewestVersion;
         public static bool UpdateAvailable;
 
