@@ -9,6 +9,9 @@ namespace BillsPlugin
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; } = false;
 
+        [Description("Sets if the plugin should check for updates.")]
+        public bool CheckForUpdates { get; set; } = true;
+
         [Description("Sets how many balls will spawn when using the balls command.")]
         public int BallAmount { get; set; } = 3;
 

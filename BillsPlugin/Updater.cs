@@ -13,6 +13,12 @@ namespace BillsPlugin
 
         public static void CheckForUpdate()
         {
+
+            if (!BillsPlugin.Instance.Config.CheckForUpdates)
+            {
+                return;
+            }
+
             if (UpdateAvailable)
             {
                 PrintUpdateMessage();
