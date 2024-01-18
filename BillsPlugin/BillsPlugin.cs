@@ -1,4 +1,5 @@
-﻿using Exiled.API.Enums;
+﻿using System;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
@@ -12,6 +13,7 @@ namespace BillsPlugin
         public static BillsPlugin Instance { get; } = new BillsPlugin();
 
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
+        public override Version Version { get; } = new Version(0, 0, 6);
 
         private Handlers.Player _player;
         private Handlers.Server _server;
@@ -24,6 +26,8 @@ namespace BillsPlugin
 
         public override void OnEnabled()
         {
+            base.OnEnabled();
+
             RegisterEvents();
 
             Updater.CheckForUpdate();
@@ -31,6 +35,8 @@ namespace BillsPlugin
 
         public override void OnDisabled()
         {
+            base.OnDisabled();
+
             UnregisterEvents();
         }
 
@@ -45,6 +51,8 @@ namespace BillsPlugin
 
             Player.TriggeringTesla += _player.OnTriggeringTesla;
             Player.Spawned += _player.OnSpawned;
+            Player.VoiceChatting += _player.OnVoiceChatting;
+            Player.TogglingNoClip += _player.OnTogglingNoClip;
 
             Map.ExplodingGrenade += _map.OnExplodingGrenade;
 
@@ -57,6 +65,8 @@ namespace BillsPlugin
 
             Player.TriggeringTesla -= _player.OnTriggeringTesla;
             Player.Spawned -= _player.OnSpawned;
+            Player.VoiceChatting -= _player.OnVoiceChatting;
+            Player.TogglingNoClip -= _player.OnTogglingNoClip;
 
             Map.ExplodingGrenade -= _map.OnExplodingGrenade;
 

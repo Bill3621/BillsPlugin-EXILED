@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Exiled.API.Features;
+using System;
 using System.IO;
 using System.Net;
-using PluginAPI.Core;
 
 namespace BillsPlugin
 {
     public class Updater
     {
-        public static readonly string CurrentVersion = "v0.0.5";
         public static string NewestVersion;
         public static bool UpdateAvailable;
 
@@ -47,11 +46,11 @@ namespace BillsPlugin
                 using (var streamReader = new StreamReader(responseStream))
                 {
                     var result = streamReader.ReadToEnd().Replace(" ", "");
-                    if (BillsPlugin.Instance.Config.Debug) Log.Debug("Parsing github result...");
+                    Log.Debug("Parsing github result...");
                     NewestVersion = Between(result, "tag_name\":\"", "\"");
-                    if (CurrentVersion.Equals(NewestVersion))
+                    if (NewestVersion.Equals($"v{BillsPlugin.Instance.Version}"))
                     {
-                        if (BillsPlugin.Instance.Config.Debug) Log.Debug("Plugin is up to date.");
+                        Log.Debug("Plugin is up to date.");
 
                         return;
                     }
@@ -69,9 +68,9 @@ namespace BillsPlugin
 
         public static void PrintUpdateMessage()
         {
-            Log.Warning("New version available: " + NewestVersion);
-            Log.Warning("Current version: " + CurrentVersion);
-            Log.Warning($"Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/latest");
+            Log.Warn($"New version available: {NewestVersion}");
+            Log.Warn($"Current version: v{BillsPlugin.Instance.Version}");
+            Log.Warn($"Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/latest");
         }
 
         public static string Between(string str, string firstString, string lastString)

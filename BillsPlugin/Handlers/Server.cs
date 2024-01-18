@@ -6,6 +6,8 @@ namespace BillsPlugin.Handlers
     {
         public void OnRoundStarted()
         {
+            Player.ProximityChatPlayers.Clear();
+
             Updater.CheckForUpdate();
             if (!Updater.UpdateAvailable) return;
             foreach (var player in Exiled.API.Features.Player.List)
