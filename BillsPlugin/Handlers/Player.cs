@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Text;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Spectating;
@@ -46,6 +48,7 @@ namespace BillsPlugin.Handlers
         {
             if (ev.VoiceMessage.Channel != VoiceChatChannel.ScpChat) return;
             if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role)) return;
+            if (!ProximityChatPlayers.Contains(ev.Player)) return;
 
             SendProximityMessage(ev.VoiceMessage);
         }

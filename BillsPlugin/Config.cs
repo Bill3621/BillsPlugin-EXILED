@@ -41,7 +41,8 @@ namespace BillsPlugin
             "Sets which SCPs can use proximity chat.\nThis will disable noclip as the selected SCPs!\nValid SCPs: Scp049, Scp0492, Scp096, Scp106, Scp173, Scp939.\nDefault: Scp049")]
         public List<RoleTypeId> ProximityChatAllowedRoles { get; set; } = new List<RoleTypeId>
         {
-            RoleTypeId.Scp049
+            RoleTypeId.Scp049,
+            RoleTypeId.Scp0492
         };
 
         [Description("Sets the max distance of the proximity chat.\nDefault: 10")]
