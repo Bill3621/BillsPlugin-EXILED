@@ -38,7 +38,7 @@ namespace BillsPlugin
         public bool DisableGodModeOnTeamChange { get; set; } = true;
 
         [Description(
-            "Sets which SCPs can use proximity chat.\nThis will disable noclip as the selected SCPs!\nValid SCPs: Scp049, Scp0492, Scp096, Scp106, Scp173, Scp939.\nDefault: Scp049")]
+            "Sets which SCPs can use proximity chat.\nValid SCPs: Scp049, Scp0492, Scp096, Scp106, Scp173, Scp939.\nDefault: Scp049, Scp0492")]
         public List<RoleTypeId> ProximityChatAllowedRoles { get; set; } = new List<RoleTypeId>
         {
             RoleTypeId.Scp049,
