@@ -8,6 +8,8 @@ This Plugin is a powerful addition to [SCP: Secret Laboratory](https://scpslgame
 - **Convenient Commands:**
   - Trigger the closest Tesla Gate with a simple command.
   - Spawn SPC-018 on a specified player.
+  - Check the current rounds stats.
+  - Check the servers stats.
 - **Automatic God Mode Disable:** Sets whether god mode should get disabled on team change (on spawn).
 
 ## Automatic Update Check
@@ -21,6 +23,8 @@ The Plugin introduces the following commands to enhance gameplay:
 
 - **`tesla`**: Trigger the closest Tesla Gate.
 - **`balls`**: Spawn SPC-018 (configurable amount) on a specified player.
+- **`gamestats`**: Shows stats of the current round.
+- **`serverstats`**: Shows stats of the server.
 
 ## Support and Issues
 For assistance, bug reports, or general inquiries, please visit our [GitHub repository](https://github.com/Bill3621/BillsPlugin-EXILED/). We appreciate your feedback and contributions!
