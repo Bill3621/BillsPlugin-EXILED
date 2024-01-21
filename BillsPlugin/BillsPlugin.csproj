@@ -120,6 +120,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ServerStats.cs" />
+    <Compile Include="Commands\GameStats.cs" />
     <Compile Include="Commands\Tesla.cs" />
     <Compile Include="Commands\Ball.cs" />
     <Compile Include="Config.cs" />
