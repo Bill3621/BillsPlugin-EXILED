@@ -13,7 +13,7 @@ namespace BillsPlugin
         public static BillsPlugin Instance { get; } = new BillsPlugin();
 
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
-        public override Version Version { get; } = new Version(0, 0, 7);
+        public override Version Version { get; } = new Version(0, 0, 8);
 
         private Handlers.Player _player;
         private Handlers.Server _server;
