@@ -48,6 +48,7 @@ namespace BillsPlugin
             _scp079 = new Handlers.Scp079();
 
             Server.RoundStarted += _server.OnRoundStarted;
+            Server.RestartingRound += _server.OnRestartingRound;
 
             Player.TriggeringTesla += _player.OnTriggeringTesla;
             Player.Spawned += _player.OnSpawned;

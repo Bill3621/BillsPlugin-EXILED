@@ -57,6 +57,9 @@
       <HintPath>..\packages\EXILED.8.7.0\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>D:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXILED.8.7.0\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
       <Private>True</Private>

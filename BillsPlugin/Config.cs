@@ -16,13 +16,15 @@ namespace BillsPlugin
         [Description("Sets how many balls will spawn when using the balls command.\nDefault: 3")]
         public int BallAmount { get; set; } = 3;
 
+        [Description("Sets time in minutes between facility scan. Set to -1 to disable.\nDefault: 7.5")]
+        public float FacilityScanTime { get; set; } = 7.5f;
+
         [Description("Sets if tesla gates should be disabled when hit by grenades.\nDefault true")]
         public bool TeslaGateDisabledByGrenade { get; set; } = true;
 
         [Description(
             "Sets the time in seconds the tesla gate should get disabled. Requires tesla_gate_disabled_by_grenade set to true.\nDefault: 30")]
         public int TeslaGateDisabledTime { get; set; } = 30;
-
 
         [Description(
             "Sets the roles which can will not trigger the tesla gates.\nValid roles: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard, Scientist, ClassD, ChaosConscript, ChaosRifleman, ChaosMaraudder, ChaosRepressor, Scp173, Scp106, Scp049, Scp079, Scp096, Scp0492, Scp939, Scp3114, Flamingo, AlphaFlamingo, ZombieFlamingo, Tutorial.\nDefault: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate")]
