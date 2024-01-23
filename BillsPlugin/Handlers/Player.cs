@@ -51,6 +51,7 @@ namespace BillsPlugin.Handlers
             if (!ProximityChatPlayers.Contains(ev.Player)) return;
 
             SendProximityMessage(ev.VoiceMessage);
+            ev.IsAllowed = false;
         }
 
         private static void SendProximityMessage(VoiceMessage msg)
