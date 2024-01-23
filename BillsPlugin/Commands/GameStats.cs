@@ -21,11 +21,11 @@ namespace BillsPlugin.Commands
         {
             if (!sender.CheckPermission(PlayerPermissions.GameplayData, out response)) return false;
 
-            short CIA = 0;
-            short CDA = 0;
-            short MAGA = 0;
-            short SA = 0;
-            short ZA = 0;
+            byte CIA = 0;
+            byte CDA = 0;
+            byte MAGA = 0;
+            byte SA = 0;
+            byte ZA = 0;
 
             foreach (var player in Player.GetPlayers())
             {
