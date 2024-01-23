@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
-using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Spectating;
@@ -8,7 +6,6 @@ using PlayerRoles.Voice;
 using UnityEngine;
 using VoiceChat;
 using VoiceChat.Networking;
-using VoiceChat.Codec;
 
 namespace BillsPlugin.Handlers
 {
@@ -31,7 +28,7 @@ namespace BillsPlugin.Handlers
         public void OnTogglingNoClip(TogglingNoClipEventArgs ev)
         {
             if (FpcNoclip.IsPermitted(ev.Player.ReferenceHub)) return;
-            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role)) return;
+            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
 
             if (!ProximityChatPlayers.Add(ev.Player))
             {
@@ -48,7 +45,7 @@ namespace BillsPlugin.Handlers
         public void OnVoiceChatting(VoiceChattingEventArgs ev)
         {
             if (ev.VoiceMessage.Channel != VoiceChatChannel.ScpChat) return;
-            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role)) return;
+            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
             if (!ProximityChatPlayers.Contains(ev.Player)) return;
 
             SendProximityMessage(ev.VoiceMessage);
@@ -81,8 +78,10 @@ namespace BillsPlugin.Handlers
 
         public void OnSpawned(SpawnedEventArgs ev)
         {
+            // I don't know why but the player was null once??
+            if (ev.Player == null) return;
             if (BillsPlugin.Instance.Config.DisableGodModeOnTeamChange) ev.Player.IsGodModeEnabled = false;
-            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role)) return;
+            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
             ev.Player.Broadcast(5, BillsPlugin.Instance.Config.ProximityChatBroadcastMessage);
         }
     }
