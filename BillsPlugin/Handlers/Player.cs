@@ -8,6 +8,7 @@ using PlayerRoles.Voice;
 using UnityEngine;
 using VoiceChat;
 using VoiceChat.Networking;
+using VoiceChat.Codec;
 
 namespace BillsPlugin.Handlers
 {
@@ -56,6 +57,7 @@ namespace BillsPlugin.Handlers
 
         private static void SendProximityMessage(VoiceMessage msg)
         {
+            msg.Channel = VoiceChatChannel.Proximity;
             foreach (var referenceHub in ReferenceHub.AllHubs)
             {
                 if (referenceHub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(referenceHub))
@@ -72,8 +74,6 @@ namespace BillsPlugin.Handlers
                 if (voiceRole2.VoiceModule.ValidateReceive(msg.Speaker, VoiceChatChannel.Proximity) is VoiceChatChannel
                         .None)
                     continue;
-
-                msg.Channel = VoiceChatChannel.Proximity;
 
                 referenceHub.connectionToClient.Send(msg);
             }
