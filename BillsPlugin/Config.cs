@@ -19,6 +19,9 @@ namespace BillsPlugin
         [Description("Sets time in minutes between facility scan. Set to -1 to disable.\nDefault: 7.5")]
         public float FacilityScanTime { get; set; } = 7.5f;
 
+        [Description("Sets the chance that a Facility Scan will fail in percent.\nDefault: 10")]
+        public short FacilityScanFailChance { get; set; } = 10;
+
         [Description("Sets if tesla gates should be disabled when hit by grenades.\nDefault true")]
         public bool TeslaGateDisabledByGrenade { get; set; } = true;
 

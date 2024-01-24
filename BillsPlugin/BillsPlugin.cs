@@ -16,7 +16,7 @@ namespace BillsPlugin
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
         public override Version Version { get; } = new Version(0, 0, 9);
 
-        public Dictionary<ReferenceHub, OpusComponent> Encoders = new Dictionary<ReferenceHub, OpusComponent>();
+        public List<OpusComponent> Encoders = new List<OpusComponent>();
 
         private Handlers.Player _player;
         private Handlers.Server _server;
@@ -83,6 +83,24 @@ namespace BillsPlugin
             _server = null;
             _map = null;
             _scp079 = null;
+        }
+
+        // Updated method to get the OpusComponent with the correct Owner and Target
+        public bool TryGetOpusComponent(ReferenceHub owner, ReferenceHub target, out OpusComponent result)
+        {
+            result = null;
+
+            foreach (var opusComponent in Encoders)
+            {
+                if (opusComponent.Owner == owner && opusComponent.Target == target)
+                {
+                    result = opusComponent;
+                    return true;
+                }
+            }
+
+            // No matching OpusComponent found
+            return false;
         }
     }
 }

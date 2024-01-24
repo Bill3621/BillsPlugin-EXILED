@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
 using UnityEngine;
 using VoiceChat;
+using VoiceChat.Codec;
+using VoiceChat.Codec.Enums;
 using VoiceChat.Networking;
 
 namespace BillsPlugin.Handlers
@@ -56,6 +59,7 @@ namespace BillsPlugin.Handlers
         {
             msg.Channel = VoiceChatChannel.Proximity;
             var plr = Exiled.API.Features.Player.Get(msg.Speaker);
+
             foreach (var referenceHub in ReferenceHub.AllHubs)
             {
                 if (referenceHub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(referenceHub))
@@ -83,8 +87,10 @@ namespace BillsPlugin.Handlers
                     SpeakerNull = msg.SpeakerNull
                 };
 
+                var comp = OpusComponent.Get(plr.ReferenceHub, referenceHub);
+
                 var message = new float[48000];
-                var comp = OpusComponent.Get(plr.ReferenceHub);
+
                 comp.Decoder.Decode(clone.Data, clone.DataLength, message);
 
                 comp.ChangeVolume(1f - distance / BillsPlugin.Instance.Config.ProximityChatDistance, message);

@@ -10,6 +10,7 @@ namespace BillsPlugin
         /// The ReferenceHub instance that this player sends as.
         /// </summary>
         public ReferenceHub Owner { get; set; }
+        public ReferenceHub Target { get; set; }
 
         public OpusEncoder Encoder { get; } = new OpusEncoder(OpusApplicationType.Voip);
         public OpusDecoder Decoder { get; } = new OpusDecoder();
@@ -19,14 +20,15 @@ namespace BillsPlugin
         /// </summary>
         /// <param name="hub">The ReferenceHub instance that this OpusComponent belongs to</param>
         /// <returns><see cref="OpusComponent"/></returns>
-        public static OpusComponent Get(ReferenceHub hub)
+        public static OpusComponent Get(ReferenceHub hub, ReferenceHub target)
         {
-            if (BillsPlugin.Instance.Encoders.TryGetValue(hub, out var player)) return player;
+            if (BillsPlugin.Instance.TryGetOpusComponent(hub, target, out var player)) return player;
 
             player = hub.gameObject.AddComponent<OpusComponent>();
             player.Owner = hub;
+            player.Target = target;
 
-            BillsPlugin.Instance.Encoders.Add(hub, player);
+            BillsPlugin.Instance.Encoders.Add(player);
             return player;
         }
 

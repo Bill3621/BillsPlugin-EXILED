@@ -23,6 +23,13 @@ namespace BillsPlugin.Handlers
             }*/
 
             RespawnEffectsController.PlayCassieAnnouncement("Scanning Facility . .", false, false, true);
+
+            if (new Random().Next(1, 101) <= BillsPlugin.Instance.Config.FacilityScanFailChance)
+            {
+                RespawnEffectsController.PlayCassieAnnouncement("Facility Scan failed", false, false, true);
+                return;
+            }
+
             var builder = new StringBuilder();
             builder.Append("Detected ");
 
@@ -71,7 +78,7 @@ namespace BillsPlugin.Handlers
 
         public void OnWaitingForPlayers()
         {
-            BillsPlugin.Instance.Encoders = new Dictionary<ReferenceHub, OpusComponent>();
+            BillsPlugin.Instance.Encoders.Clear();
         }
     }
 }
