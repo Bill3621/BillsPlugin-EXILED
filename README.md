@@ -11,7 +11,7 @@ This Plugin is a powerful addition to [SCP: Secret Laboratory](https://scpslgame
   - Check the current rounds stats.
   - Check the servers stats.
 - **Automatic God Mode Disable:** Sets whether god mode should get disabled on team change (on spawn).
-
+- **Proximity Chat for SCPs:** SCPs (configurable which) have proximity chat to talk with humans. This proximity chat includes a falloff effect (the further away the quieter).
 ## Automatic Update Check
 The Plugin includes an automatic update check feature, ensuring you stay up-to-date with the latest improvements and fixes. The plugin will periodically check for updates and notify you when a new version is available.
 
