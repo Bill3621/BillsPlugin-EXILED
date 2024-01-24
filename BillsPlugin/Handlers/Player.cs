@@ -76,7 +76,7 @@ namespace BillsPlugin.Handlers
 
                 var clone = new VoiceMessage
                 {
-                    Data = msg.Data,
+                    Data = (byte[])msg.Data.Clone(),
                     DataLength = msg.DataLength,
                     Channel = msg.Channel,
                     Speaker = msg.Speaker,
