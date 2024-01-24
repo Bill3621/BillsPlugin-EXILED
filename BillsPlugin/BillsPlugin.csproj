@@ -133,6 +133,7 @@
     <Compile Include="Handlers\Scp079.cs" />
     <Compile Include="Handlers\Server.cs" />
     <Compile Include="BillsPlugin.cs" />
+    <Compile Include="OpusComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Updater.cs" />
   </ItemGroup>

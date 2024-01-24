@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Server = Exiled.Events.Handlers.Server;
@@ -13,7 +14,9 @@ namespace BillsPlugin
         public static BillsPlugin Instance { get; } = new BillsPlugin();
 
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
-        public override Version Version { get; } = new Version(0, 0, 8);
+        public override Version Version { get; } = new Version(0, 0, 9);
+
+        public Dictionary<ReferenceHub, OpusComponent> Encoders = new Dictionary<ReferenceHub, OpusComponent>();
 
         private Handlers.Player _player;
         private Handlers.Server _server;
@@ -49,6 +52,7 @@ namespace BillsPlugin
 
             Server.RoundStarted += _server.OnRoundStarted;
             Server.RestartingRound += _server.OnRestartingRound;
+            Server.WaitingForPlayers += _server.OnWaitingForPlayers;
 
             Player.TriggeringTesla += _player.OnTriggeringTesla;
             Player.Spawned += _player.OnSpawned;
@@ -63,6 +67,8 @@ namespace BillsPlugin
         public void UnregisterEvents()
         {
             Server.RoundStarted -= _server.OnRoundStarted;
+            Server.RestartingRound -= _server.OnRestartingRound;
+            Server.WaitingForPlayers -= _server.OnWaitingForPlayers;
 
             Player.TriggeringTesla -= _player.OnTriggeringTesla;
             Player.Spawned -= _player.OnSpawned;

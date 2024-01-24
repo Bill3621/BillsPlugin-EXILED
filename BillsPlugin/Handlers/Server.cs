@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
-using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using MEC;
 using PlayerRoles;
@@ -67,6 +67,11 @@ namespace BillsPlugin.Handlers
             foreach (var player in Exiled.API.Features.Player.List)
                 if (player.CheckPermission(PlayerPermissions.ServerConfigs))
                     player.Broadcast(6, "BillsPlugin: An update is available.", Broadcast.BroadcastFlags.AdminChat);
+        }
+
+        public void OnWaitingForPlayers()
+        {
+            BillsPlugin.Instance.Encoders = new Dictionary<ReferenceHub, OpusComponent>();
         }
     }
 }

@@ -47,8 +47,8 @@ namespace BillsPlugin
             RoleTypeId.Scp0492
         };
 
-        [Description("Sets the max distance of the proximity chat.\nDefault: 10")]
-        public ushort ProximityChatDistance { get; set; } = 10;
+        [Description("Sets the max distance of the proximity chat.\nDefault: 20")]
+        public ushort ProximityChatDistance { get; set; } = 20;
 
         [Description(
             "Sets the message which gets displayed upon spawning as an SCP with proximity chat allowed.\nDefault: <b>Proximity Chat can be toggled with <color=#1be0e0>[ALT]</color></b>.")]

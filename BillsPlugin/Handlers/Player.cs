@@ -55,6 +55,7 @@ namespace BillsPlugin.Handlers
         private static void SendProximityMessage(VoiceMessage msg)
         {
             msg.Channel = VoiceChatChannel.Proximity;
+            var plr = Exiled.API.Features.Player.Get(msg.Speaker);
             foreach (var referenceHub in ReferenceHub.AllHubs)
             {
                 if (referenceHub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(referenceHub))
@@ -64,7 +65,8 @@ namespace BillsPlugin.Handlers
                     continue;
                 var voiceRole2 = (IVoiceRole)referenceHub.roleManager.CurrentRole;
 
-                if (Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position) >=
+                var distance = Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position);
+                if (distance >=
                     BillsPlugin.Instance.Config.ProximityChatDistance)
                     continue;
 
@@ -72,7 +74,24 @@ namespace BillsPlugin.Handlers
                         .None)
                     continue;
 
-                referenceHub.connectionToClient.Send(msg);
+                var clone = new VoiceMessage
+                {
+                    Data = msg.Data,
+                    DataLength = msg.DataLength,
+                    Channel = msg.Channel,
+                    Speaker = msg.Speaker,
+                    SpeakerNull = msg.SpeakerNull
+                };
+
+                var message = new float[48000];
+                var comp = OpusComponent.Get(plr.ReferenceHub);
+                comp.Decoder.Decode(clone.Data, clone.DataLength, message);
+
+                comp.ChangeVolume(1f - distance / BillsPlugin.Instance.Config.ProximityChatDistance, message);
+
+                clone.DataLength = comp.Encoder.Encode(message, clone.Data, 480);
+
+                referenceHub.connectionToClient.Send<VoiceMessage>(clone, 0);
             }
         }
 
