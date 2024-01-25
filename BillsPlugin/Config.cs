@@ -22,6 +22,12 @@ namespace BillsPlugin
         [Description("Sets the chance that a Facility Scan will fail in percent.\nDefault: 10")]
         public short FacilityScanFailChance { get; set; } = 10;
 
+        [Description("Sets if the Facility Scan should fail after the Alpha Wahread blew up.\nDefault: false")]
+        public bool FacilityScanFailAlphaWarhead { get; set; } = false;
+
+        [Description("Sets if instead of playing an announcement, a failed Facility Scan should be completely ignored (no announcements at all).\nDefault: false")]
+        public bool FacilityScanFailNoAnnouncements { get; set; } = false;
+
         [Description("Sets if tesla gates should be disabled when hit by grenades.\nDefault true")]
         public bool TeslaGateDisabledByGrenade { get; set; } = true;
 

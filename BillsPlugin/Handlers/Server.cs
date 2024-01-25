@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using MEC;
 using PlayerRoles;
@@ -16,15 +16,14 @@ namespace BillsPlugin.Handlers
 
         private static readonly Action ScanFacility = () =>
         {
-            // I don't know if there's a better way to check if the round has restarted.
-            /*if (currentSeed != Exiled.API.Features.Map.Seed)
-            {
-                return;
-            }*/
+            var fail = new Random().Next(1, 101) <= BillsPlugin.Instance.Config.FacilityScanFailChance ||
+                       (Warhead.IsDetonated && BillsPlugin.Instance.Config.FacilityScanFailAlphaWarhead);
+
+            if (fail && BillsPlugin.Instance.Config.FacilityScanFailNoAnnouncements) return;
 
             RespawnEffectsController.PlayCassieAnnouncement("Scanning Facility . .", false, false, true);
 
-            if (new Random().Next(1, 101) <= BillsPlugin.Instance.Config.FacilityScanFailChance)
+            if (fail)
             {
                 RespawnEffectsController.PlayCassieAnnouncement("Facility Scan failed", false, false, true);
                 return;
@@ -65,7 +64,7 @@ namespace BillsPlugin.Handlers
             Player.ProximityChatPlayers.Clear();
 
             if (BillsPlugin.Instance.Config.FacilityScanTime > 0)
-                // Timeframe a large value so it's basically infinite long.
+                // Timeframe is a large value so it's basically infinite long.
                 _handle = Timing.CallPeriodically(15_000f * 500, BillsPlugin.Instance.Config.FacilityScanTime * 60f,
                     ScanFacility);
 

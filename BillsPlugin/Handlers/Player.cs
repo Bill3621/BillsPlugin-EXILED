@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
 using UnityEngine;
 using VoiceChat;
-using VoiceChat.Codec;
-using VoiceChat.Codec.Enums;
 using VoiceChat.Networking;
 
 namespace BillsPlugin.Handlers
@@ -65,9 +62,8 @@ namespace BillsPlugin.Handlers
                 if (referenceHub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(referenceHub))
                     continue;
 
-                if (!(referenceHub.roleManager.CurrentRole is IVoiceRole))
+                if (!(referenceHub.roleManager.CurrentRole is IVoiceRole voiceRole2))
                     continue;
-                var voiceRole2 = (IVoiceRole)referenceHub.roleManager.CurrentRole;
 
                 var distance = Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position);
                 if (distance >=
