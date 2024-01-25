@@ -14,7 +14,7 @@ namespace BillsPlugin
         public static BillsPlugin Instance { get; } = new BillsPlugin();
 
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
-        public override Version Version { get; } = new Version(0, 1, 0);
+        public override Version Version { get; } = new Version(0, 1, 1);
 
         public List<OpusComponent> Encoders = new List<OpusComponent>();
 
