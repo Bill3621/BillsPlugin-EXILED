@@ -64,7 +64,7 @@ namespace BillsPlugin.Handlers
             Player.ProximityChatPlayers.Clear();
 
             if (BillsPlugin.Instance.Config.FacilityScanTime > 0)
-                // Timeframe is a large value so it's basically infinite long.
+                // Timeframe is a large value, so it's basically infinite long.
                 _handle = Timing.CallPeriodically(15_000f * 500, BillsPlugin.Instance.Config.FacilityScanTime * 60f,
                     ScanFacility);
 
