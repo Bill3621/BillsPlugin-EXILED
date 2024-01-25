@@ -21,11 +21,12 @@ namespace BillsPlugin.Handlers
 
             if (fail && BillsPlugin.Instance.Config.FacilityScanFailNoAnnouncements) return;
 
-            RespawnEffectsController.PlayCassieAnnouncement("Scanning Facility . .", false, false, true);
-
+            //RespawnEffectsController.PlayCassieAnnouncement("Scanning Facility . .", false, false, true);
+            Cassie.MessageTranslated("Scanning Facility . .", "Scanning Facility...", isNoisy: false);
             if (fail)
             {
-                RespawnEffectsController.PlayCassieAnnouncement("Facility Scan failed", false, false, true);
+                Cassie.MessageTranslated("Facility Scan failed", "Facility Scan <color=red>failed</color>.", isNoisy: false);
+                //RespawnEffectsController.PlayCassieAnnouncement("Facility Scan failed", false, false, true);
                 return;
             }
 
@@ -51,7 +52,24 @@ namespace BillsPlugin.Handlers
             if (chaos != 0) builder.Append(chaos + " Chaos Insurgency . ");
             if (scp != 0) builder.Append(scp + $" SCP{(scp > 1 ? "s" : "")} . ");
 
-            RespawnEffectsController.PlayCassieAnnouncement(builder.ToString(), false, false, true);
+            var messageString = builder.ToString().Trim();
+            if (messageString.Equals("Detected")) messageString = "Scan Failure .";
+            var subtitleString = messageString.Replace("Detected", "Detected:").Replace(" .", ", ").Trim();
+            subtitleString = subtitleString.Remove(subtitleString.Length - 1);
+
+            // Formatting
+            subtitleString = subtitleString.Replace("Failure", "<color=red>Failure</color>");
+            subtitleString = subtitleString.Replace("Class D", "<color=orange>Class-D</color>");
+            subtitleString = subtitleString.Replace("Scientist", "<color=yellow>Scientist</color>");
+            subtitleString = subtitleString.Replace("Scientists", "<color=yellow>Scientists</color>");
+            subtitleString = subtitleString.Replace("Security Agent", "<color=blue>Security Agent</color>");
+            subtitleString = subtitleString.Replace("Security Agents", "<color=blue>Security Agents</color>");
+            subtitleString = subtitleString.Replace("Chaos Insurgency", "<color=green>Chaos Insurgency</color>");
+            subtitleString = subtitleString.Replace("SCP", "<color=red>SCP</color>");
+            subtitleString = subtitleString.Replace("SCPs", "<color=red>SCPs</color>");
+
+            Cassie.MessageTranslated(messageString, subtitleString, isNoisy: false);
+            //RespawnEffectsController.PlayCassieAnnouncement(builder.ToString(), false, false, true);
         };
 
         public void OnRestartingRound()
