@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
@@ -16,9 +17,11 @@ namespace BillsPlugin.Handlers
 
         private static readonly Action ScanFacility = () =>
         {
+            Log.Debug("Starting FacilityScan.");
             var fail = new Random().Next(1, 101) <= BillsPlugin.Instance.Config.FacilityScanFailChance ||
                        (Warhead.IsDetonated && BillsPlugin.Instance.Config.FacilityScanFailAlphaWarhead);
 
+            Log.Debug($"Fail: {fail}");
             if (fail && BillsPlugin.Instance.Config.FacilityScanFailNoAnnouncements) return;
 
             //RespawnEffectsController.PlayCassieAnnouncement("Scanning Facility . .", false, false, true);
@@ -54,6 +57,7 @@ namespace BillsPlugin.Handlers
 
             var messageString = builder.ToString().Trim();
             if (messageString.Equals("Detected")) messageString = "Scan Failure .";
+            Log.Debug($"Raw Message String: {messageString}");
             var subtitleString = messageString.Replace("Detected", "Detected:").Replace(" .", ", ").Trim();
             subtitleString = subtitleString.Remove(subtitleString.Length - 1);
 
