@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ForceScan.cs" />
     <Compile Include="Commands\ServerStats.cs" />
     <Compile Include="Commands\GameStats.cs" />
     <Compile Include="Commands\Tesla.cs" />

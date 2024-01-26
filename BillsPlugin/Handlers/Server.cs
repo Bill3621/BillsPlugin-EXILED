@@ -15,7 +15,7 @@ namespace BillsPlugin.Handlers
     {
         private CoroutineHandle _handle;
 
-        private static readonly Action ScanFacility = () =>
+        public static readonly Action ScanFacility = () =>
         {
             Log.Debug("Starting FacilityScan.");
             var fail = new Random().Next(1, 101) <= BillsPlugin.Instance.Config.FacilityScanFailChance ||
