@@ -19,7 +19,9 @@ namespace BillsPlugin.Handlers
         {
             Log.Debug("Starting FacilityScan.");
             var fail = new Random().Next(1, 101) <= BillsPlugin.Instance.Config.FacilityScanFailChance ||
-                       (Warhead.IsDetonated && BillsPlugin.Instance.Config.FacilityScanFailAlphaWarhead);
+                       (Warhead.IsDetonated && BillsPlugin.Instance.Config.FacilityScanFailAlphaWarhead) ||
+                       PluginAPI.Core.Player.GetPlayers().TrueForAll(player => !player.IsAlive);
+
 
             Log.Debug($"Fail: {fail}");
             if (fail && BillsPlugin.Instance.Config.FacilityScanFailNoAnnouncements) return;
@@ -56,7 +58,6 @@ namespace BillsPlugin.Handlers
             if (scp != 0) builder.Append(scp + $" SCP{(scp > 1 ? "s" : "")} . ");
 
             var messageString = builder.ToString().Trim();
-            if (messageString.Equals("Detected")) messageString = "Scan Failure .";
             Log.Debug($"Raw Message String: {messageString}");
             var subtitleString = messageString.Replace("Detected", "Detected:").Replace(" .", ", ").Trim();
             subtitleString = subtitleString.Remove(subtitleString.Length - 1);
