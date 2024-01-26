@@ -9,7 +9,7 @@ namespace BillsPlugin.Commands
     {
         public string Command { get; } = "forcescan";
 
-        public string[] Aliases { get; } = { "fc" };
+        public string[] Aliases { get; } = { };
 
         public string Description { get; } = "Forces the ScanFacility event to run.";
 
