@@ -65,13 +65,13 @@ namespace BillsPlugin.Handlers
             // Formatting
             subtitleString = subtitleString.Replace("Failure", "<color=red>Failure</color>");
             subtitleString = subtitleString.Replace("Class D", "<color=orange>Class-D</color>");
-            subtitleString = subtitleString.Replace("Scientist", "<color=yellow>Scientist</color>");
             subtitleString = subtitleString.Replace("Scientists", "<color=yellow>Scientists</color>");
-            subtitleString = subtitleString.Replace("Security Agent", "<color=blue>Security Agent</color>");
+            subtitleString = subtitleString.Replace("Scientist", "<color=yellow>Scientist</color>");
             subtitleString = subtitleString.Replace("Security Agents", "<color=blue>Security Agents</color>");
+            subtitleString = subtitleString.Replace("Security Agent", "<color=blue>Security Agent</color>");
             subtitleString = subtitleString.Replace("Chaos Insurgency", "<color=green>Chaos Insurgency</color>");
-            subtitleString = subtitleString.Replace("SCP", "<color=red>SCP</color>");
             subtitleString = subtitleString.Replace("SCPs", "<color=red>SCPs</color>");
+            subtitleString = subtitleString.Replace("SCP", "<color=red>SCP</color>");
 
             Cassie.MessageTranslated(messageString, subtitleString, isNoisy: false);
             //RespawnEffectsController.PlayCassieAnnouncement(builder.ToString(), false, false, true);
