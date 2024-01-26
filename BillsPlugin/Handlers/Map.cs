@@ -1,4 +1,5 @@
 ﻿using System;
+using Exiled.API.Enums;
 using Exiled.Events.EventArgs.Map;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace BillsPlugin.Handlers
         public void OnExplodingGrenade(ExplodingGrenadeEventArgs ev)
         {
             if (!BillsPlugin.Instance.Config.TeslaGateDisabledByGrenade) return;
+            if (ev.Projectile.ProjectileType != ProjectileType.FragGrenade &&
+                ev.Projectile.ProjectileType != ProjectileType.Scp018) return;
 
             var position = ev.Position;
 
