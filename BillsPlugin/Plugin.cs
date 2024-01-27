@@ -111,7 +111,7 @@ public class Config : IConfig
     [Description("Sets how many balls will spawn when using the balls command.\nDefault: 3")]
     public int BallAmount { get; set; } = 3;
 
-    [Description("Sets time in minutes between facility scan. Set to -1 to disable.\nDefault: 7.5")]
+    [Description("Sets time in minutes between facility scan. Set to -1 to disable.\nDefault: 8")]
     public int FacilityScanTime { get; set; } = 8;
 
     [Description("Sets the chance that a Facility Scan will fail in percent.\nDefault: 10")]
@@ -138,7 +138,8 @@ public class Config : IConfig
         RoleTypeId.NtfSpecialist,
         RoleTypeId.NtfSergeant,
         RoleTypeId.NtfCaptain,
-        RoleTypeId.NtfPrivate
+        RoleTypeId.NtfPrivate,
+        RoleTypeId.FacilityGuard
     ];
 
     [Description("Sets if god mode should get disabled on team change.\nDefault: true")]
