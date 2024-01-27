@@ -18,11 +18,11 @@ namespace BillsPlugin.Handlers
         {
             if (ev.Tesla.IsShocking) return;
 
-            if (BillsPlugin.Instance.Config.TeslaGateBypass.Contains(ev.Player.RoleManager.CurrentRole.RoleTypeId))
-            {
-                ev.IsTriggerable = false;
-                ev.IsInIdleRange = false;
-            }
+            if (!BillsPlugin.Instance.Config.TeslaGateBypass.Contains(ev.Player.RoleManager.CurrentRole.RoleTypeId))
+                return;
+
+            ev.IsTriggerable = false;
+            ev.IsInIdleRange = false;
         }
 
         public void OnTogglingNoClip(TogglingNoClipEventArgs ev)
@@ -30,16 +30,16 @@ namespace BillsPlugin.Handlers
             if (FpcNoclip.IsPermitted(ev.Player.ReferenceHub)) return;
             if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
 
+            ev.IsAllowed = false;
+
             if (!ProximityChatPlayers.Add(ev.Player))
             {
                 ProximityChatPlayers.Remove(ev.Player);
                 ev.Player.ShowHint(BillsPlugin.Instance.Config.ProximityChatDisabledMessage, 5);
-                ev.IsAllowed = false;
                 return;
             }
 
             ev.Player.ShowHint(BillsPlugin.Instance.Config.ProximityChatEnabledMessage, 5);
-            ev.IsAllowed = false;
         }
 
         public void OnVoiceChatting(VoiceChattingEventArgs ev)

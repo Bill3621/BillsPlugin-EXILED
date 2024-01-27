@@ -65,9 +65,9 @@ namespace BillsPlugin
             "<b>Proximity Chat can be toggled with <color=#1be0e0>[ALT]</color></b>.";
 
         [Description(
-            "Sets the message which gets displayed when enabling proximity chat.\nDefault: <i><b>Proximity Chat <color=#42f57b>[ON]</color></b></i>.")]
+            "Sets the message which gets displayed when enabling proximity chat.\nDefault: <b>Proximity Chat <color=#42f57b>[ON]</color></b>.")]
         public string ProximityChatEnabledMessage { get; set; } =
-            "<i><b>Proximity Chat <color=#42f57b>[ON]</color></b></i>.";
+            "<b>Proximity Chat <color=#42f57b>[ON]</color></b>.";
 
         [Description(
             "Sets the message which gets displayed when disabling proximity chat.\nDefault: <i><b>Proximity Chat <color=#ff0000>[OFF]</color></b></i>.")]

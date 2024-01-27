@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Text;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
@@ -7,7 +6,6 @@ using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using MEC;
 using PlayerRoles;
-using Respawning;
 
 namespace BillsPlugin.Handlers
 {
@@ -79,6 +77,7 @@ namespace BillsPlugin.Handlers
 
         public void OnRestartingRound()
         {
+            BillsPlugin.Instance.Encoders.Clear();
             Timing.Instance.KillCoroutinesOnInstance(_handle);
         }
 
@@ -96,11 +95,6 @@ namespace BillsPlugin.Handlers
             foreach (var player in Exiled.API.Features.Player.List)
                 if (player.CheckPermission(PlayerPermissions.ServerConfigs))
                     player.Broadcast(6, "BillsPlugin: An update is available.", Broadcast.BroadcastFlags.AdminChat);
-        }
-
-        public void OnWaitingForPlayers()
-        {
-            BillsPlugin.Instance.Encoders.Clear();
         }
     }
 }

@@ -52,7 +52,6 @@ namespace BillsPlugin
 
             Server.RoundStarted += _server.OnRoundStarted;
             Server.RestartingRound += _server.OnRestartingRound;
-            Server.WaitingForPlayers += _server.OnWaitingForPlayers;
 
             Player.TriggeringTesla += _player.OnTriggeringTesla;
             Player.Spawned += _player.OnSpawned;
@@ -68,7 +67,6 @@ namespace BillsPlugin
         {
             Server.RoundStarted -= _server.OnRoundStarted;
             Server.RestartingRound -= _server.OnRestartingRound;
-            Server.WaitingForPlayers -= _server.OnWaitingForPlayers;
 
             Player.TriggeringTesla -= _player.OnTriggeringTesla;
             Player.Spawned -= _player.OnSpawned;
@@ -85,7 +83,6 @@ namespace BillsPlugin
             _scp079 = null;
         }
 
-        // Updated method to get the OpusComponent with the correct Owner and Target
         public bool TryGetOpusComponent(ReferenceHub owner, ReferenceHub target, out OpusComponent result)
         {
             result = null;
@@ -99,7 +96,6 @@ namespace BillsPlugin
                 }
             }
 
-            // No matching OpusComponent found
             return false;
         }
     }
