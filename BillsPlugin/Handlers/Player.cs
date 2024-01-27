@@ -54,47 +54,80 @@ namespace BillsPlugin.Handlers
 
         private static void SendProximityMessage(VoiceMessage msg)
         {
-            msg.Channel = VoiceChatChannel.Proximity;
-            var plr = Exiled.API.Features.Player.Get(msg.Speaker);
+            UpdateVoiceMessageChannel(msg);
 
-            foreach (var referenceHub in ReferenceHub.AllHubs)
+            foreach (var hub in FilterHubsByRole(msg))
             {
-                if (referenceHub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(referenceHub))
+                if (!IsWithinProximity(msg, hub))
                     continue;
 
-                if (!(referenceHub.roleManager.CurrentRole is IVoiceRole voiceRole2))
+                if (!CanReceiveMessage(msg, hub))
                     continue;
 
-                var distance = Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position);
-                if (distance >=
-                    BillsPlugin.Instance.Config.ProximityChatDistance)
-                    continue;
+                var clonedMessage = CloneMessageWithAdjustedVolume(msg, hub);
 
-                if (voiceRole2.VoiceModule.ValidateReceive(msg.Speaker, VoiceChatChannel.Proximity) is VoiceChatChannel
-                        .None)
-                    continue;
-
-                var clone = new VoiceMessage
-                {
-                    Data = (byte[])msg.Data.Clone(),
-                    DataLength = msg.DataLength,
-                    Channel = msg.Channel,
-                    Speaker = msg.Speaker,
-                    SpeakerNull = msg.SpeakerNull
-                };
-
-                var comp = OpusComponent.Get(plr.ReferenceHub, referenceHub);
-
-                var message = new float[48000];
-
-                comp.Decoder.Decode(clone.Data, clone.DataLength, message);
-
-                comp.ChangeVolume(1f - distance / BillsPlugin.Instance.Config.ProximityChatDistance, message);
-
-                clone.DataLength = comp.Encoder.Encode(message, clone.Data, 480);
-
-                referenceHub.connectionToClient.Send<VoiceMessage>(clone, 0);
+                SendClonedMessage(clonedMessage, hub);
             }
+        }
+
+        private static void UpdateVoiceMessageChannel(VoiceMessage msg)
+        {
+            msg.Channel = VoiceChatChannel.Proximity;
+        }
+
+        private static IEnumerable<ReferenceHub> FilterHubsByRole(VoiceMessage msg)
+        {
+            foreach (var hub in ReferenceHub.AllHubs)
+            {
+                if (hub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(hub))
+                    continue;
+
+                if (!(hub.roleManager.CurrentRole is IVoiceRole))
+                    continue;
+
+                yield return hub;
+            }
+        }
+
+        private static bool IsWithinProximity(VoiceMessage msg, ReferenceHub hub)
+        {
+            var distance = Vector3.Distance(msg.Speaker.transform.position, hub.transform.position);
+            return distance < BillsPlugin.Instance.Config.ProximityChatDistance;
+        }
+
+        private static bool CanReceiveMessage(VoiceMessage msg, ReferenceHub hub)
+        {
+            if (!(hub.roleManager.CurrentRole is IVoiceRole voiceRole))
+                return false;
+
+            return voiceRole.VoiceModule.ValidateReceive(msg.Speaker, VoiceChatChannel.Proximity) != VoiceChatChannel.None;
+        }
+
+        private static VoiceMessage CloneMessageWithAdjustedVolume(VoiceMessage msg, ReferenceHub hub)
+        {
+            var clonedMsg = new VoiceMessage
+            {
+                Data = (byte[])msg.Data.Clone(),
+                DataLength = msg.DataLength,
+                Channel = msg.Channel,
+                Speaker = msg.Speaker,
+                SpeakerNull = msg.SpeakerNull
+            };
+
+            var player = Exiled.API.Features.Player.Get(msg.Speaker);
+            var opusComponent = OpusComponent.Get(player.ReferenceHub, hub);
+
+            var message = new float[48000];
+            opusComponent.Decoder.Decode(clonedMsg.Data, clonedMsg.DataLength, message);
+            opusComponent.ChangeVolume(1f - Vector3.Distance(msg.Speaker.transform.position, hub.transform.position) / BillsPlugin.Instance.Config.ProximityChatDistance, message);
+            clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data, 480);
+
+            return clonedMsg;
+        }
+
+        private static void SendClonedMessage(VoiceMessage msg, ReferenceHub hub)
+        {
+            hub.connectionToClient.Send<VoiceMessage>(msg, 0);
         }
 
         public void OnSpawned(SpawnedEventArgs ev)
