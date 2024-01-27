@@ -100,7 +100,8 @@ namespace BillsPlugin.Handlers
             if (!(hub.roleManager.CurrentRole is IVoiceRole voiceRole))
                 return false;
 
-            return voiceRole.VoiceModule.ValidateReceive(msg.Speaker, VoiceChatChannel.Proximity) != VoiceChatChannel.None;
+            return voiceRole.VoiceModule.ValidateReceive(msg.Speaker, VoiceChatChannel.Proximity) !=
+                   VoiceChatChannel.None;
         }
 
         private static VoiceMessage CloneMessageWithAdjustedVolume(VoiceMessage msg, ReferenceHub hub)
@@ -119,7 +120,9 @@ namespace BillsPlugin.Handlers
 
             var message = new float[48000];
             opusComponent.Decoder.Decode(clonedMsg.Data, clonedMsg.DataLength, message);
-            opusComponent.ChangeVolume(1f - Vector3.Distance(msg.Speaker.transform.position, hub.transform.position) / BillsPlugin.Instance.Config.ProximityChatDistance, message);
+            opusComponent.ChangeVolume(
+                1f - Vector3.Distance(msg.Speaker.transform.position, hub.transform.position) /
+                BillsPlugin.Instance.Config.ProximityChatDistance, message);
             clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data, 480);
 
             return clonedMsg;
