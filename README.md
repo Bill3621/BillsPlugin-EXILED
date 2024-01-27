@@ -28,4 +28,4 @@ The Plugin introduces the following commands to enhance gameplay:
 - **`serverstats`**: Shows stats of the server.
 
 ## Support and Issues
-For assistance, bug reports, or general inquiries, please visit our [GitHub repository](https://github.com/Bill3621/BillsPlugin-EXILED/). We appreciate your feedback and contributions!
+For assistance, bug reports, or general inquiries, please visit our [GitHub repository](https://github.com/Bill3621/BillsPlugin-EXILED/). We appreciate your feedback and contributions! (not really)
