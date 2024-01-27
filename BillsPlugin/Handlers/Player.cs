@@ -29,19 +29,36 @@ namespace BillsPlugin.Handlers
 
         public void OnTogglingNoClip(TogglingNoClipEventArgs ev)
         {
-            if (FpcNoclip.IsPermitted(ev.Player.ReferenceHub)) return;
-            if (!BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
+            if (!IsNoClipPermitted(ev)) return;
+
+            if (!IsProximityChatAllowed(ev)) return;
 
             ev.IsAllowed = false;
 
+            ToggleProximityChat(ev);
+        }
+
+        private bool IsNoClipPermitted(TogglingNoClipEventArgs ev)
+        {
+            return FpcNoclip.IsPermitted(ev.Player.ReferenceHub);
+        }
+
+        private bool IsProximityChatAllowed(TogglingNoClipEventArgs ev)
+        {
+            return BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type);
+        }
+
+        private void ToggleProximityChat(TogglingNoClipEventArgs ev)
+        {
             if (!ProximityChatPlayers.Add(ev.Player))
             {
                 ProximityChatPlayers.Remove(ev.Player);
                 ev.Player.ShowHint(BillsPlugin.Instance.Config.ProximityChatDisabledMessage, 5);
-                return;
             }
-
-            ev.Player.ShowHint(BillsPlugin.Instance.Config.ProximityChatEnabledMessage, 5);
+            else
+            {
+                ev.Player.ShowHint(BillsPlugin.Instance.Config.ProximityChatEnabledMessage, 5);
+            }
         }
 
         public void OnVoiceChatting(VoiceChattingEventArgs ev)
@@ -110,10 +127,7 @@ namespace BillsPlugin.Handlers
                 SpeakerNull = msg.SpeakerNull
             };
 
-            if (hub.GetRoleId() == RoleTypeId.Spectator || hub.GetRoleId() == RoleTypeId.Overwatch)
-            {
-                return clonedMsg;
-            }
+            if (hub.GetRoleId() == RoleTypeId.Spectator || hub.GetRoleId() == RoleTypeId.Overwatch) return clonedMsg;
 
             var player = Exiled.API.Features.Player.Get(msg.Speaker);
             var opusComponent = OpusComponent.Get(player.ReferenceHub, hub);
