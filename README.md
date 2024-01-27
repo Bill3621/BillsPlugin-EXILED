@@ -1,5 +1,8 @@
 # Bills Plugin
 
+For a part of this plugin I had used Windows Copilot AI, which apparently took code from someone else, which I didn't know.
+That means that this plugin uses a modified version of [ScpProximityChat](https://github.com/Jesus-QC/ScpProximityChat) by user [Jesus-QC](https://github.com/Jesus-QC).
+
 ## Overview
 This Plugin is a powerful addition to [SCP: Secret Laboratory](https://scpslgame.com/) that integrates seamlessly with the [EXILED plugin framework version 8.7.0](https://github.com/Exiled-Team/EXILED/releases/tag/8.7.0). Designed to enhance gameplay, this plugin introduces a range of features and Quality of Life improvements, including:
 
