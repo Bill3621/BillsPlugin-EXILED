@@ -2,7 +2,6 @@
 using System.Linq;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
 using UnityEngine;
@@ -29,18 +28,13 @@ namespace BillsPlugin.Handlers
 
         public void OnTogglingNoClip(TogglingNoClipEventArgs ev)
         {
-            if (!IsNoClipPermitted(ev)) return;
+            if (!ev.Player.IsNoclipPermitted) return;
 
             if (!IsProximityChatAllowed(ev)) return;
 
             ev.IsAllowed = false;
 
             ToggleProximityChat(ev);
-        }
-
-        private bool IsNoClipPermitted(TogglingNoClipEventArgs ev)
-        {
-            return ev.Player.IsNoclipPermitted;
         }
 
         private bool IsProximityChatAllowed(TogglingNoClipEventArgs ev)
