@@ -22,7 +22,7 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 1, 1);
+    public override Version Version => new(0, 1, 1, 2);
 
     public List<OpusComponent> Encoders = [];
 
@@ -159,15 +159,15 @@ public class Config : IConfig
     [Description(
         "Sets the message which gets displayed upon spawning as an SCP with proximity chat allowed.\nDefault: Proximity Chat can be toggled with Alt.")]
     public string ProximityChatBroadcastMessage { get; set; } =
-        "<b>Proximity Chat can be toggled with Alt.";
+        "<b>Proximity Chat can be toggled with <color=yellow>Alt</color>.";
 
     [Description(
-        "Sets the message which gets displayed when enabling proximity chat.\nDefault: Proximity Chat on.")]
+        "Sets the message which gets displayed when enabling proximity chat.\nDefault: Proximity Chat <color=green>on</color>.")]
     public string ProximityChatEnabledMessage { get; set; } =
-        "Proximity Chat on.";
+        "Proximity Chat <color=green>on</color>.";
 
     [Description(
-        "Sets the message which gets displayed when disabling proximity chat.\nDefault: Proximity Chat off.")]
+        "Sets the message which gets displayed when disabling proximity chat.\nDefault: Proximity Chat <color=red>off</color>.")]
     public string ProximityChatDisabledMessage { get; set; } =
-        "Proximity Chat off.";
+        "Proximity Chat <color=red>off</color>.";
 }

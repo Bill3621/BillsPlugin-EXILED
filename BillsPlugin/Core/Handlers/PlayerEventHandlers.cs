@@ -35,8 +35,7 @@ internal class PlayerEventHandlers
 
     public void OnTogglingNoClip(TogglingNoClipEventArgs ev)
     {
-        if (!ev.Player.IsNoclipPermitted) return;
-
+        if (ev.Player.IsNoclipPermitted) return;
         if (!_config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
 
         ev.IsAllowed = false;
