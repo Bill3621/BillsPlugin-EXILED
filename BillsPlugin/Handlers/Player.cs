@@ -40,7 +40,7 @@ namespace BillsPlugin.Handlers
 
         private bool IsNoClipPermitted(TogglingNoClipEventArgs ev)
         {
-            return FpcNoclip.IsPermitted(ev.Player.ReferenceHub);
+            return ev.Player.IsNoclipPermitted;
         }
 
         private bool IsProximityChatAllowed(TogglingNoClipEventArgs ev)
