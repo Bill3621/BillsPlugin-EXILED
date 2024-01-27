@@ -37,12 +37,12 @@ namespace BillsPlugin.Handlers
             ToggleProximityChat(ev);
         }
 
-        private bool IsProximityChatAllowed(TogglingNoClipEventArgs ev)
+        private static bool IsProximityChatAllowed(TogglingNoClipEventArgs ev)
         {
             return BillsPlugin.Instance.Config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type);
         }
 
-        private void ToggleProximityChat(TogglingNoClipEventArgs ev)
+        private static void ToggleProximityChat(TogglingNoClipEventArgs ev)
         {
             if (!ProximityChatPlayers.Add(ev.Player))
             {
@@ -67,7 +67,7 @@ namespace BillsPlugin.Handlers
 
         private static void SendProximityMessage(VoiceMessage msg)
         {
-            UpdateVoiceMessageChannel(msg);
+            msg.Channel = VoiceChatChannel.Proximity;
 
             foreach (var hub in FilterHubsByRole(msg))
             {
@@ -79,13 +79,9 @@ namespace BillsPlugin.Handlers
 
                 var clonedMessage = CloneMessageWithAdjustedVolume(msg, hub);
 
-                SendClonedMessage(clonedMessage, hub);
+                //hub.connectionToClient.Send<VoiceMessage>(clonedMessage, 0);
+                hub.connectionToClient.Send(clonedMessage);
             }
-        }
-
-        private static void UpdateVoiceMessageChannel(VoiceMessage msg)
-        {
-            msg.Channel = VoiceChatChannel.Proximity;
         }
 
         private static IEnumerable<ReferenceHub> FilterHubsByRole(VoiceMessage msg)
@@ -133,14 +129,10 @@ namespace BillsPlugin.Handlers
                 1f - Vector3.Distance(msg.Speaker.transform.position, hub.transform.position) /
                 BillsPlugin.Instance.Config.ProximityChatDistance, message);
 
-            clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data, 480);
+            //clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data, 480);
+            clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data);
 
             return clonedMsg;
-        }
-
-        private static void SendClonedMessage(VoiceMessage msg, ReferenceHub hub)
-        {
-            hub.connectionToClient.Send<VoiceMessage>(msg, 0);
         }
 
         public void OnSpawned(SpawnedEventArgs ev)
