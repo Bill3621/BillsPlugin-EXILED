@@ -60,18 +60,18 @@ namespace BillsPlugin
         public ushort ProximityChatDistance { get; set; } = 20;
 
         [Description(
-            "Sets the message which gets displayed upon spawning as an SCP with proximity chat allowed.\nDefault: <b>Proximity Chat can be toggled with <color=#1be0e0>[ALT]</color></b>.")]
+            "Sets the message which gets displayed upon spawning as an SCP with proximity chat allowed.\nDefault: Proximity Chat can be toggled with Alt.")]
         public string ProximityChatBroadcastMessage { get; set; } =
-            "<b>Proximity Chat can be toggled with <color=#1be0e0>[ALT]</color></b>.";
+            "<b>Proximity Chat can be toggled with Alt.";
 
         [Description(
-            "Sets the message which gets displayed when enabling proximity chat.\nDefault: <b>Proximity Chat <color=#42f57b>[ON]</color></b>.")]
+            "Sets the message which gets displayed when enabling proximity chat.\nDefault: Proximity Chat on.")]
         public string ProximityChatEnabledMessage { get; set; } =
-            "<b>Proximity Chat <color=#42f57b>[ON]</color></b>.";
+            "Proximity Chat on.";
 
         [Description(
-            "Sets the message which gets displayed when disabling proximity chat.\nDefault: <i><b>Proximity Chat <color=#ff0000>[OFF]</color></b></i>.")]
+            "Sets the message which gets displayed when disabling proximity chat.\nDefault: Proximity Chat off.")]
         public string ProximityChatDisabledMessage { get; set; } =
-            "<i><b>Proximity Chat <color=#ff0000>[OFF]</color></b></i>.";
+            "Proximity Chat off.";
     }
 }
