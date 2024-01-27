@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Exiled.Events.EventArgs.Player;
+using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
@@ -77,16 +79,9 @@ namespace BillsPlugin.Handlers
 
         private static IEnumerable<ReferenceHub> FilterHubsByRole(VoiceMessage msg)
         {
-            foreach (var hub in ReferenceHub.AllHubs)
-            {
-                if (hub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(hub))
-                    continue;
-
-                if (!(hub.roleManager.CurrentRole is IVoiceRole))
-                    continue;
-
-                yield return hub;
-            }
+            return ReferenceHub.AllHubs.Where(hub =>
+                !(hub.roleManager.CurrentRole is SpectatorRole && !msg.Speaker.IsSpectatedBy(hub)) &&
+                hub.roleManager.CurrentRole is IVoiceRole);
         }
 
         private static bool IsWithinProximity(VoiceMessage msg, ReferenceHub hub)
@@ -115,14 +110,21 @@ namespace BillsPlugin.Handlers
                 SpeakerNull = msg.SpeakerNull
             };
 
+            if (hub.GetRoleId() == RoleTypeId.Spectator || hub.GetRoleId() == RoleTypeId.Overwatch)
+            {
+                return clonedMsg;
+            }
+
             var player = Exiled.API.Features.Player.Get(msg.Speaker);
             var opusComponent = OpusComponent.Get(player.ReferenceHub, hub);
 
             var message = new float[48000];
             opusComponent.Decoder.Decode(clonedMsg.Data, clonedMsg.DataLength, message);
+
             opusComponent.ChangeVolume(
                 1f - Vector3.Distance(msg.Speaker.transform.position, hub.transform.position) /
                 BillsPlugin.Instance.Config.ProximityChatDistance, message);
+
             clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data, 480);
 
             return clonedMsg;
