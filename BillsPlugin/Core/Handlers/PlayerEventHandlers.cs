@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using PlayerRoles.Spectating;
@@ -21,6 +22,15 @@ internal class PlayerEventHandlers
     }
 
     public static readonly HashSet<Exiled.API.Features.Player> ProximityChatPlayers = [];
+
+    public void OnHurting(HurtingEventArgs ev)
+    {
+        if (!_config.CuffedNoGunDamage) return;
+        if (!ev.Player.IsCuffed) return;
+        if (!ev.DamageHandler.Type.IsWeapon()) return;
+
+        ev.IsAllowed = false;
+    }
 
     public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
     {

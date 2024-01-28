@@ -42,6 +42,8 @@ public class Plugin : Plugin<Config>
 
     private void Initialize()
     {
+        GlobalConfig = Config;
+
         _playerEvents = new PlayerEventHandlers(GlobalConfig);
         _serverEvents = new ServerEventHandlers(GlobalConfig);
         _mapEvents = new MapEventHandlers(GlobalConfig);
@@ -61,6 +63,7 @@ public class Plugin : Plugin<Config>
         Player.Spawned += _playerEvents.OnSpawned;
         Player.VoiceChatting += _playerEvents.OnVoiceChatting;
         Player.TogglingNoClip += _playerEvents.OnTogglingNoClip;
+        Player.Hurting += _playerEvents.OnHurting;
 
         Map.ExplodingGrenade += _mapEvents.OnExplodingGrenade;
 
@@ -76,6 +79,7 @@ public class Plugin : Plugin<Config>
         Player.Spawned -= _playerEvents.OnSpawned;
         Player.VoiceChatting -= _playerEvents.OnVoiceChatting;
         Player.TogglingNoClip -= _playerEvents.OnTogglingNoClip;
+        Player.Hurting += _playerEvents.OnHurting;
 
         Map.ExplodingGrenade -= _mapEvents.OnExplodingGrenade;
 
@@ -123,6 +127,9 @@ public class Config : IConfig
     [Description(
         "Sets if instead of playing an announcement, a failed Facility Scan should be completely ignored (no announcements at all).\nDefault: false")]
     public bool FacilityScanFailNoAnnouncements { get; set; } = false;
+
+    [Description("Sets if cuffed people shouldn't take damage from guns.\nDefault: true")]
+    public bool CuffedNoGunDamage { get; set; } = true;
 
     [Description("Sets if tesla gates should be disabled when hit by grenades.\nDefault true")]
     public bool TeslaGateDisabledByGrenade { get; set; } = true;
