@@ -11,7 +11,7 @@ namespace BillsPlugin;
 
 public class Plugin : Plugin<Config>
 {
-    public static Plugin Instance { get; } = new Plugin();
+    public static Plugin Instance { get; } = new();
 
     [CanBeNull] internal static Config GlobalConfig;
 

@@ -9,4 +9,3 @@ global using Player = Exiled.Events.Handlers.Player;
 global using Map = Exiled.Events.Handlers.Map;
 global using Scp079 = Exiled.Events.Handlers.Scp079;
 
-namespace BillsPlugin;

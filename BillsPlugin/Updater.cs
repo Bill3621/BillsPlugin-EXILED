@@ -64,7 +64,7 @@ public class Updater
     {
         Log.Warn($"New version available: {NewestVersion}");
         Log.Warn($"Current version: v{Plugin.Instance.Version}");
-        Log.Warn($"Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/latest");
+        Log.Warn("Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/latest");
     }
 
     public static string Between(string str, string firstString, string lastString)

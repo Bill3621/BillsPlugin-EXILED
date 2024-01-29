@@ -21,32 +21,32 @@ internal class GameStats : ICommand
     {
         if (!sender.CheckPermission(PlayerPermissions.GameplayData, out response)) return false;
 
-        byte CIA = 0;
-        byte CDA = 0;
-        byte MAGA = 0;
-        byte SA = 0;
-        byte ZA = 0;
+        byte chaosInsurgencyAlive = 0;
+        byte classDAlive = 0;
+        byte mtfAndGuardsAlive = 0;
+        byte scpsAlive = 0;
+        byte zombiesAlive = 0;
 
         foreach (var player in Players.GetPlayers())
         {
             if (player.Team == Team.Scientists) continue;
             if (player.Team == Team.ClassD)
             {
-                CDA += 1;
+                classDAlive += 1;
                 continue;
             }
 
             if (player.Role == RoleTypeId.Scp0492)
             {
-                ZA += 1;
+                zombiesAlive += 1;
                 continue;
             }
 
             if (player.Team.GetSide() == Side.ChaosInsurgency)
-                CIA += 1;
+                chaosInsurgencyAlive += 1;
             else if (player.Team.GetSide() == Side.Mtf)
-                MAGA += 1;
-            else if (player.Team.GetSide() == Side.Scp) SA += 1;
+                mtfAndGuardsAlive += 1;
+            else if (player.Team.GetSide() == Side.Scp) scpsAlive += 1;
         }
 
         response = "\n"
@@ -55,11 +55,11 @@ internal class GameStats : ICommand
                    + $"<color=green>Map seed:</color> <color=red>{Maps.Seed}</color>\n\n"
                    + $"<color=green>TotalScpKills:</color> {Statistics.CurrentRound.TotalScpKills}\n"
                    + $"<color=green>ZombiesChanged:</color> {Statistics.CurrentRound.ZombiesChanged}\n"
-                   + $"<color=green>ScpsAlive:</color> {SA}\n"
-                   + $"<color=green>ChaosInsurgencyAlive:</color> {CIA}\n"
-                   + $"<color=green>ClassDAlive:</color> {CDA}\n"
-                   + $"<color=green>MtfAndGuardsAlive:</color> {MAGA}\n"
-                   + $"<color=green>ZombiesAlive:</color> {ZA}\n"
+                   + $"<color=green>ScpsAlive:</color> {scpsAlive}\n"
+                   + $"<color=green>ChaosInsurgencyAlive:</color> {chaosInsurgencyAlive}\n"
+                   + $"<color=green>ClassDAlive:</color> {classDAlive}\n"
+                   + $"<color=green>MtfAndGuardsAlive:</color> {mtfAndGuardsAlive}\n"
+                   + $"<color=green>ZombiesAlive:</color> {zombiesAlive}\n"
                    + $"<color=green>ClassDEscaped:</color> {Statistics.CurrentRound.ClassDEscaped}\n"
                    + $"<color=green>ScientistsEscaped:</color> {Statistics.CurrentRound.ScientistsEscaped}\n"
                    + $"<color=green>TotalKilledPlayers:</color> {Statistics.CurrentRound.TotalKilledPlayers}";

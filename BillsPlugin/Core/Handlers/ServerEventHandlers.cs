@@ -2,7 +2,6 @@
 using System.Text;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
-using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using MEC;
 using PlayerRoles;
