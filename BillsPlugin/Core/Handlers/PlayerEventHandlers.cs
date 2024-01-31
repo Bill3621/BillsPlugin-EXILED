@@ -82,6 +82,8 @@ internal class PlayerEventHandlers
     {
         msg.Channel = VoiceChatChannel.Proximity;
 
+        msg.SendToSpectatorsOf(msg.Speaker);
+
         foreach (var hub in FilterHubsByRole(msg))
         {
             if (!IsWithinProximity(msg, hub))
@@ -94,6 +96,7 @@ internal class PlayerEventHandlers
 
             //hub.connectionToClient.Send<VoiceMessage>(clonedMessage, 0);
             hub.connectionToClient.Send(clonedMessage);
+            clonedMessage.SendToSpectatorsOf(hub);
         }
     }
 
