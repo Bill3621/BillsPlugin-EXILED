@@ -24,7 +24,7 @@ internal class ServerEventHandlers
         Log.Debug("Starting FacilityScan.");
         var fail = new Random().Next(1, 101) <= _config.FacilityScanFailChance ||
                    (Warhead.IsDetonated && _config.FacilityScanFailAlphaWarhead) ||
-                   PluginAPI.Core.Player.GetPlayers().TrueForAll(player => !player.IsAlive);
+                   Players.GetPlayers().TrueForAll(player => !player.IsAlive);
 
 
         Log.Debug($"Fail: {fail}");
@@ -48,7 +48,7 @@ internal class ServerEventHandlers
         byte scp = 0;
         byte chaos = 0;
 
-        foreach (var player in PluginAPI.Core.Player.GetPlayers())
+        foreach (var player in Players.GetPlayers())
             if (player.Team == Team.Scientists) scientists++;
             else if (player.Team == Team.ClassD) classD++;
             else if (player.Team.GetSide() == Side.Mtf) security++;

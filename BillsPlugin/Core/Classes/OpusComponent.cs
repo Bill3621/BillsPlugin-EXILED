@@ -2,7 +2,7 @@
 using VoiceChat.Codec;
 using VoiceChat.Codec.Enums;
 
-namespace BillsPlugin;
+namespace BillsPlugin.Core.Classes;
 
 public class OpusComponent : MonoBehaviour
 {

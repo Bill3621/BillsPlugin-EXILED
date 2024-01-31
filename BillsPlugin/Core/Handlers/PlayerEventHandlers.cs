@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BillsPlugin.Core.Classes;
 using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
+using MEC;
 using PlayerRoles;
 using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
@@ -150,6 +152,23 @@ internal class PlayerEventHandlers
     {
         // I don't know why but the player was null once??
         if (ev.Player == null) return;
+
+        var broadcast = _config.RoleSpawnBroadcasts.FirstOrDefault(broad => broad.Role == ev.Player.Role.Type);
+        if (broadcast != null)
+        {
+            Timing.CallDelayed(broadcast.BroadcastDelay, () =>
+            {
+                if (broadcast.IsHintInstead)
+                {
+                    ev.Player.ShowHint(broadcast.BroadcastMessage, broadcast.TimeShown);
+                }
+                else
+                {
+                    ev.Player.Broadcast(broadcast.TimeShown, broadcast.BroadcastMessage);
+                }
+            });
+        }
+
         if (_config.DisableGodModeOnSpawn) ev.Player.IsGodModeEnabled = false;
         if (!_config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
         ev.Player.Broadcast(5, _config.ProximityChatBroadcastMessage);

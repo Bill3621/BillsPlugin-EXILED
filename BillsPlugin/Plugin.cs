@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using BillsPlugin.Core.Classes;
 using BillsPlugin.Core.Handlers;
 using Exiled.API.Interfaces;
 using JetBrains.Annotations;
@@ -139,8 +140,8 @@ public class Config : IConfig
     public int TeslaGateDisabledTime { get; set; } = 30;
 
     [Description(
-        "Sets the roles which can will not trigger the tesla gates.\nValid roles: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard, Scientist, ClassD, ChaosConscript, ChaosRifleman, ChaosMaraudder, ChaosRepressor, Scp173, Scp106, Scp049, Scp079, Scp096, Scp0492, Scp939, Scp3114, Flamingo, AlphaFlamingo, ZombieFlamingo, Tutorial.\nDefault: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard")]
-    public List<RoleTypeId> TeslaGateBypass { get; set; } =
+        "Sets the roles which can will not trigger the tesla gates.\nValid roles: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard, Scientist, ClassD, ChaosConscript, ChaosRifleman, ChaosMarauder, ChaosRepressor, Scp173, Scp106, Scp049, Scp079, Scp096, Scp0492, Scp939, Scp3114, Flamingo, AlphaFlamingo, ZombieFlamingo, Tutorial.\nDefault: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard")]
+    public RoleTypeId[] TeslaGateBypass { get; set; } =
     [
         RoleTypeId.NtfSpecialist,
         RoleTypeId.NtfSergeant,
@@ -154,7 +155,7 @@ public class Config : IConfig
 
     [Description(
         "Sets which SCPs can use proximity chat.\nValid SCPs: Scp049, Scp0492, Scp096, Scp106, Scp173, Scp939.\nDefault: Scp049, Scp0492")]
-    public List<RoleTypeId> ProximityChatAllowedRoles { get; set; } =
+    public RoleTypeId[] ProximityChatAllowedRoles { get; set; } =
     [
         RoleTypeId.Scp049,
         RoleTypeId.Scp0492
@@ -177,4 +178,10 @@ public class Config : IConfig
         "Sets the message which gets displayed when disabling proximity chat.\nDefault: Proximity Chat <color=red>off</color>.")]
     public string ProximityChatDisabledMessage { get; set; } =
         "Proximity Chat <color=red>off</color>.";
+
+    [Description("Sets broadcast messages sent to specific roles on spawn.\nValid roles: NtfSpecialist, NtfSergeant, NtfCaptain, NtfPrivate, FacilityGuard, Scientist, ClassD, ChaosConscript, ChaosRifleman, ChaosMarauder, ChaosRepressor, Scp173, Scp106, Scp049, Scp079, Scp096, Scp0492, Scp939, Scp3114, Flamingo, AlphaFlamingo, ZombieFlamingo, Tutorial.\nDefault: None")]
+    public RoleSpawnBroadcast[] RoleSpawnBroadcasts { get; set; } = [
+        new RoleSpawnBroadcast(),
+        new RoleSpawnBroadcast()
+    ];
 }
