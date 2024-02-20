@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BillsPlugin.Core.Classes;
+using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
 using MEC;
+using Mirror;
 using PlayerRoles;
+using PlayerRoles.Ragdolls;
 using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
 using UnityEngine;
@@ -23,7 +26,56 @@ internal class PlayerEventHandlers
         _config = global ?? new Config();
     }
 
-    public static readonly HashSet<Exiled.API.Features.Player> ProximityChatPlayers = [];
+    public static readonly HashSet<EPlayer> ProximityChatPlayers = [];
+
+    public EPlayer? GetRandomSpectator()
+    {
+        var random = new System.Random();
+        var spectator = EPlayer.List
+            .OrderBy(item => random.Next())
+            .FirstOrDefault(player => player.Role == RoleTypeId.Spectator);
+
+        return spectator;
+    }
+
+    public void OnLeaving(LeftEventArgs ev)
+    {
+        if (!_config.ReplaceScpOnLeave) return;
+        var team = ev.Player.ReferenceHub.GetRoleId();
+        if (team.GetSide() != Side.Scp) return;
+
+        var replacingPlayer = GetRandomSpectator();
+        if (replacingPlayer == null) return;
+
+        MEC.Timing.CallDelayed(0.25f, () =>
+        {
+
+            BasicRagdoll[] array = [.. (from r in UnityEngine.Object.FindObjectsOfType<BasicRagdoll>()
+                                    orderby r.Info.CreationTime descending
+                                    select r)];
+
+            foreach (var ragdoll in array)
+            {
+                if (ragdoll.Info.OwnerHub != ev.Player.ReferenceHub)
+                {
+                    continue;
+                }
+                NetworkServer.Destroy(ragdoll.gameObject);
+                break;
+            }
+        });
+
+        replacingPlayer.ReferenceHub.roleManager.ServerSetRole(team, RoleChangeReason.Respawn, RoleSpawnFlags.None);
+        replacingPlayer.ArtificialHealth = ev.Player.ArtificialHealth;
+        replacingPlayer.Health = ev.Player.Health;
+        replacingPlayer.Teleport(ev.Player.Position);
+        replacingPlayer.Broadcast(6, "<b>You have replaced a player who disconnected.</b>");
+        foreach (var p in EPlayer.List)
+        {
+            if (p == replacingPlayer) continue;
+            p.Broadcast(6, "<b>An SCP has been replaced.</b>");
+        }
+    }
 
     public void OnHurting(HurtingEventArgs ev)
     {

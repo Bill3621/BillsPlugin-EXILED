@@ -23,7 +23,7 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 1, 4);
+    public override Version Version => new(0, 1, 1, 5);
 
     public List<OpusComponent> Encoders = [];
 
@@ -65,6 +65,7 @@ public class Plugin : Plugin<Config>
         Player.VoiceChatting += _playerEvents.OnVoiceChatting;
         Player.TogglingNoClip += _playerEvents.OnTogglingNoClip;
         Player.Hurting += _playerEvents.OnHurting;
+        Player.Left += _playerEvents.OnLeaving;
 
         Map.ExplodingGrenade += _mapEvents.OnExplodingGrenade;
 
@@ -115,6 +116,9 @@ public class Config : IConfig
 
     [Description("Sets how many balls will spawn when using the balls command.\nDefault: 3")]
     public int BallAmount { get; set; } = 3;
+
+    [Description("Sets if an SCP should be replaced when they disconnect from the server.\nDefault: true")]
+    public bool ReplaceScpOnLeave { get; set; } = true;
 
     [Description("Sets time in minutes between facility scan. Set to -1 to disable.\nDefault: 8")]
     public int FacilityScanTime { get; set; } = 8;

@@ -1,5 +1,7 @@
 ﻿global using Exiled.API.Features;
 
+global using EPlayer = Exiled.API.Features.Player;
+
 global using Players = PluginAPI.Core.Player;
 global using Maps = PluginAPI.Core.Map;
 global using Servers = PluginAPI.Core.Server;
