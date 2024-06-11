@@ -6,12 +6,14 @@ namespace BillsPlugin;
 
 public class Updater
 {
-    public static string NewestVersion;
+    public static Version NewestVersion;
     public static bool UpdateAvailable;
 
     public static void CheckForUpdate()
     {
         if (!Plugin.Instance.Config.CheckForUpdates) return;
+
+
 
         if (UpdateAvailable)
         {
@@ -42,11 +44,20 @@ public class Updater
 
             var result = streamReader.ReadToEnd().Replace(" ", "");
             Log.Debug("Parsing github result...");
-            NewestVersion = Between(result, "tag_name\":\"", "\"");
-            if (NewestVersion.Equals($"v{Plugin.Instance.Version}"))
+            NewestVersion = Version.Parse(Between(result, "tag_name\":\"", "\"").Replace("v", ""));
+
+            int compare = NewestVersion.CompareTo(Plugin.Instance.Version);
+            Log.Debug($"Current version: {Plugin.Instance.Version}");
+            Log.Debug($"Newest version: {NewestVersion}");
+            Log.Debug($"Compare result: {compare}");
+            if (compare == 0)
             {
                 Log.Debug("Plugin is up to date.");
-
+                return;
+            }
+            else if (compare < 0)
+            {
+                Log.Debug("Plugin is development build.");
                 return;
             }
 

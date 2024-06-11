@@ -23,7 +23,7 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 1, 5);
+    public override Version Version => new(0, 1, 1, 6);
 
     public List<OpusComponent> Encoders = [];
 
@@ -120,6 +120,9 @@ public class Config : IConfig
     [Description("Sets if an SCP should be replaced when they disconnect from the server.\nDefault: true")]
     public bool ReplaceScpOnLeave { get; set; } = true;
 
+    [Description("Sets if an SCP-049-2 instance should be replaced when they disconnect from the server. Only works if replace_scp_on_leave is set to true.\nDefault: false")]
+    public bool ReplaceZombies { get; set; } = false;
+
     [Description("Sets time in minutes between facility scan. Set to -1 to disable.\nDefault: 8")]
     public int FacilityScanTime { get; set; } = 8;
 
@@ -165,8 +168,8 @@ public class Config : IConfig
         RoleTypeId.Scp0492
     ];
 
-    [Description("Sets the max distance of the proximity chat.\nDefault: 20")]
-    public ushort ProximityChatDistance { get; set; } = 20;
+    [Description("Sets the max distance of the proximity chat.\nDefault: 25")]
+    public ushort ProximityChatDistance { get; set; } = 25;
 
     [Description(
         "Sets the message which gets displayed upon spawning as an SCP with proximity chat allowed.\nDefault: Proximity Chat can be toggled with Alt.")]

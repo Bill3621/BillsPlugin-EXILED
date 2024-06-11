@@ -98,7 +98,7 @@ internal class ServerEventHandlers
 
         Updater.CheckForUpdate();
         if (!Updater.UpdateAvailable) return;
-        foreach (var player in Exiled.API.Features.Player.List)
+        foreach (var player in EPlayer.List)
             if (player.CheckPermission(PlayerPermissions.ServerConfigs))
                 player.Broadcast(6, "BillsPlugin: An update is available.", Broadcast.BroadcastFlags.AdminChat);
     }

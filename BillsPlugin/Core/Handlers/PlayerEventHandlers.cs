@@ -43,6 +43,7 @@ internal class PlayerEventHandlers
         if (!_config.ReplaceScpOnLeave) return;
         var team = ev.Player.ReferenceHub.GetRoleId();
         if (team.GetSide() != Side.Scp) return;
+        if (!_config.ReplaceZombies && team == RoleTypeId.Scp0492) return;
 
         var replacingPlayer = GetRandomSpectator();
         if (replacingPlayer == null) return;
@@ -187,7 +188,7 @@ internal class PlayerEventHandlers
 
         if (hub.GetRoleId() == RoleTypeId.Spectator || hub.GetRoleId() == RoleTypeId.Overwatch) return clonedMsg;
 
-        var player = Exiled.API.Features.Player.Get(msg.Speaker);
+        var player = EPlayer.Get(msg.Speaker);
         var opusComponent = OpusComponent.Get(player.ReferenceHub, hub);
 
         var message = new float[48000];

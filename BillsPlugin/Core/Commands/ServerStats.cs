@@ -6,6 +6,8 @@ namespace BillsPlugin.Core.Commands;
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 internal class ServerStats : ICommand
 {
+    public bool SanitizeResponse { get; } = true;
+
     public string Command { get; } = "serverstats";
 
     public string[] Aliases { get; } = [];
