@@ -90,6 +90,7 @@ public class Updater
         try
         {
             Log.Debug($"Current plugin path: {pluginPath}");
+            Log.Debug($"Latest release download: {downloadUrl}");
 
             DownloadAndReplaceFile(downloadUrl, pluginPath);
             Log.Info("Plugin successfully updated!");
