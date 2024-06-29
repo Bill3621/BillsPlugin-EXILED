@@ -7,7 +7,6 @@ using BillsPlugin.Core.Handlers;
 using Exiled.API.Interfaces;
 using JetBrains.Annotations;
 using PlayerRoles;
-using Exiled.Loader;
 
 namespace BillsPlugin;
 
@@ -24,7 +23,7 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 1, 7);
+    public override Version Version => new(0, 1, 1, 8);
 
     public List<OpusComponent> Encoders = [];
 
@@ -115,7 +114,7 @@ public class Config : IConfig
     [Description("Sets if the plugin should check for updates.\nDefault: true")]
     public bool CheckForUpdates { get; set; } = true;
 
-    [Description("Sets if the plugin should auttomatically update once it finds an update.\nDefault: true")]
+    [Description("Sets if the plugin should automatically update once it finds an update.\nDefault: true")]
     public bool AutoUpdate { get; set; } = true;
 
     [Description("Sets how many balls will spawn when using the balls command.\nDefault: 3")]
