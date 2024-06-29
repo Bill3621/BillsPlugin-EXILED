@@ -87,6 +87,13 @@ internal class ServerEventHandlers
         Timing.Instance.KillCoroutinesOnInstance(_handle);
     }
 
+    public static void BroadcastStaff(string messageString)
+    {
+        foreach (var player in EPlayer.List)
+            if (player.CheckPermission(PlayerPermissions.ServerConfigs))
+                player.Broadcast(6, messageString, Broadcast.BroadcastFlags.AdminChat);
+    }
+
     public void OnRoundStarted()
     {
         PlayerEventHandlers.ProximityChatPlayers.Clear();
@@ -98,8 +105,17 @@ internal class ServerEventHandlers
 
         Updater.CheckForUpdate();
         if (!Updater.UpdateAvailable) return;
-        foreach (var player in EPlayer.List)
-            if (player.CheckPermission(PlayerPermissions.ServerConfigs))
-                player.Broadcast(6, "BillsPlugin: An update is available.", Broadcast.BroadcastFlags.AdminChat);
+        if (Updater.InstalledAutomatically)
+        {
+            BroadcastStaff("BillsPlugin: An update has been installed. Applied on next restart.");
+        }
+        else if (_config.AutoUpdate)
+        {
+            BroadcastStaff("BillsPlugin: An update is available. Trying to install it.");
+        }
+        else
+        {
+            BroadcastStaff("BillsPlugin: An update is available.");
+        }
     }
 }

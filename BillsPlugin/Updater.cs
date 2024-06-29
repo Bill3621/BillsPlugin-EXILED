@@ -1,13 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using BillsPlugin.Core.Handlers;
+using Exiled.Loader;
 
 namespace BillsPlugin;
 
 public class Updater
 {
     public static Version NewestVersion;
+    public static string downloadUrl = "";
     public static bool UpdateAvailable;
+    public static bool InstalledAutomatically;
 
     public static void CheckForUpdate()
     {
@@ -29,6 +33,8 @@ public class Updater
         httpWebRequest.ContentType = "application/json; charset=utf-8;";
         httpWebRequest.UserAgent =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+
+
 
         try
         {
@@ -64,18 +70,72 @@ public class Updater
             // New version
             UpdateAvailable = true;
             PrintUpdateMessage();
+
+            // Update
+
+            downloadUrl = Between(result, "browser_download_url\":\"", "\"");
+
         }
         catch (Exception ex)
         {
             Log.Error("Error at checking for updates: " + ex.Message);
         }
+
+        if (!UpdateAvailable) return;
+        if (InstalledAutomatically) return;
+
+        string pluginPath = PathExtensions.GetPath(Plugin.Instance);
+
+        try
+        {
+            Log.Debug($"Current plugin path: {pluginPath}");
+
+            DownloadAndReplaceFile(downloadUrl, pluginPath);
+            Log.Info("Plugin successfully updated!");
+            InstalledAutomatically = true;
+            ServerEventHandlers.BroadcastStaff("BillsPlugin: An update has been installed. Applied on next restart.");
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"An error occurred while trying to update the plugin: {ex.Message}");
+            ServerEventHandlers.BroadcastStaff("BillsPlugin: Error at installing update.");
+        }
+    }
+
+    private static void DownloadAndReplaceFile(string url, string filePath)
+    {
+        using WebClient webClient = new();
+
+        string tempFilePath = Path.GetTempFileName();
+
+        webClient.DownloadFile(url, tempFilePath);
+
+        File.Copy(tempFilePath, filePath, true);
+
+        File.Delete(tempFilePath);
     }
 
     public static void PrintUpdateMessage()
     {
+        if (Plugin.Instance.Config.AutoUpdate)
+        {
+            Log.Warn($"New version available: {NewestVersion}");
+            Log.Warn($"Current version: v{Plugin.Instance.Version}");
+            if (InstalledAutomatically)
+            {
+                Log.Warn("Update will apply next server restart.");
+            }
+            else
+            {
+
+                Log.Warn("Update will be automatically installed.");
+            }
+            return;
+        }
+
         Log.Warn($"New version available: {NewestVersion}");
         Log.Warn($"Current version: v{Plugin.Instance.Version}");
-        Log.Warn("Download it from here: https://github.com/Bill3621/BillsPlugin-EXILED/releases/latest");
+        Log.Warn($"Download it here: {downloadUrl}");
     }
 
     public static string Between(string str, string firstString, string lastString)
