@@ -35,8 +35,6 @@ public class Plugin : Plugin<Config>
     public override void OnEnabled()
     {
         Initialize();
-
-        Log.Info(PathExtensions.GetPath(this));
     }
 
     public override void OnDisabled()
