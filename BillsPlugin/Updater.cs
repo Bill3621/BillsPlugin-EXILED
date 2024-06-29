@@ -83,6 +83,7 @@ public class Updater
 
         if (!UpdateAvailable) return;
         if (InstalledAutomatically) return;
+        if (!Plugin.Instance.Config.AutoUpdate) return;
 
         string pluginPath = PathExtensions.GetPath(Plugin.Instance);
 
