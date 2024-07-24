@@ -6,9 +6,6 @@ namespace BillsPlugin.Core.Commands;
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 internal class ForceScan : ICommand
 {
-
-    public bool SanitizeResponse { get; } = true;
-
     public string Command { get; } = "forcescan";
 
     public string[] Aliases { get; } = [];

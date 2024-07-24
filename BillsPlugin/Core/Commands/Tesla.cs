@@ -9,8 +9,6 @@ namespace BillsPlugin.Core.Commands;
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 internal class Tesla : ICommand, IUsageProvider
 {
-    public bool SanitizeResponse { get; } = true;
-
     public string Command { get; } = "tesla";
 
     public string[] Aliases { get; } = [];

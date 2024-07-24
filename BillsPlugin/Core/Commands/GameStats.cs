@@ -10,9 +10,6 @@ namespace BillsPlugin.Core.Commands;
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 internal class GameStats : ICommand
 {
-
-    public bool SanitizeResponse { get; } = true;
-
     public string Command { get; } = "gamestats";
 
     public string[] Aliases { get; } = [];

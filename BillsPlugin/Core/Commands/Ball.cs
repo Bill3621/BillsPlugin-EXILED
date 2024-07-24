@@ -19,8 +19,6 @@ namespace BillsPlugin.Core.Commands;
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 internal class Ball : ICommand, IUsageProvider
 {
-    public bool SanitizeResponse { get; } = true;
-
     public string Command { get; } = "balls";
 
     public string[] Aliases { get; } = [];
