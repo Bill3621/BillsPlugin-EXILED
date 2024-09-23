@@ -225,8 +225,11 @@ internal class PlayerEventHandlers
             });
         }
 
-        if (_config.DisableGodModeOnSpawn) ev.Player.IsGodModeEnabled = false;
-        if (!_config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
+        if (ev.Player.Role != null && ev.Player.Role != RoleTypeId.None)
+        {
+            if (_config.DisableGodModeOnSpawn) ev.Player.IsGodModeEnabled = false;
+            if (!_config.ProximityChatAllowedRoles.Contains(ev.Player.Role.Type)) return;
+        }
         ev.Player.Broadcast(5, _config.ProximityChatBroadcastMessage);
     }
 }
