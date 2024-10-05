@@ -23,7 +23,7 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 2, 0);
+    public override Version Version => new(0, 1, 2, 1);
 
     public List<OpusComponent> Encoders = [];
 
