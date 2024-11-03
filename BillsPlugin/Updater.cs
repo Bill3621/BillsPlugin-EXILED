@@ -17,8 +17,6 @@ public class Updater
     {
         if (!Plugin.Instance.Config.CheckForUpdates) return;
 
-
-
         if (UpdateAvailable)
         {
             PrintUpdateMessage();

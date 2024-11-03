@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using BillsPlugin.Core.Classes;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
@@ -150,7 +148,6 @@ internal class PlayerEventHandlers
 
             var clonedMessage = CloneMessageWithAdjustedVolume(msg, hub);
 
-            //hub.connectionToClient.Send<VoiceMessage>(clonedMessage, 0);
             hub.connectionToClient.Send(clonedMessage);
             clonedMessage.SendToSpectatorsOf(hub);
         }
@@ -194,8 +191,6 @@ internal class PlayerEventHandlers
 
         if (hub.GetRoleId() == RoleTypeId.Spectator || hub.GetRoleId() == RoleTypeId.Overwatch) return clonedMsg;
 
-        var player = EPlayer.Get(msg.Speaker);
-
         var message = new float[48000];
         Decoder.Decode(clonedMsg.Data, clonedMsg.DataLength, message);
 
@@ -203,7 +198,6 @@ internal class PlayerEventHandlers
             _config.ProximityChatDistance;
         for (var i = 0; i < message.Length; i++) message[i] *= volumeFactor;
 
-        //clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data, 480);
         clonedMsg.DataLength = Encoder.Encode(message, clonedMsg.Data);
 
         return clonedMsg;
@@ -211,10 +205,9 @@ internal class PlayerEventHandlers
 
     public void OnSpawned(SpawnedEventArgs ev)
     {
-        // I don't know why but the player was null once??
         if (ev.Player == null) return;
 
-        var broadcast = _config.RoleSpawnBroadcasts.FirstOrDefault(broad => broad.Role == ev.Player.Role.Type);
+        var broadcast = _config.RoleSpawnBroadcasts?.FirstOrDefault(broad => broad.Role == ev.Player.Role.Type);
         if (broadcast != null)
         {
             Timing.CallDelayed(broadcast.BroadcastDelay, () =>
