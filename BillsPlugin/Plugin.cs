@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using BillsPlugin.Core.Classes;
 using BillsPlugin.Core.Handlers;
 using Exiled.API.Interfaces;
+using Exiled.Loader;
 using JetBrains.Annotations;
 using PlayerRoles;
 
@@ -23,7 +25,7 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 2, 1);
+    public override Version Version => new(0, 1, 2, 2);
 
     private Plugin()
     {
@@ -107,6 +109,9 @@ public class Config : IConfig
 
     [Description("Sets if the plugin should automatically update once it finds an update.\nDefault: true")]
     public bool AutoUpdate { get; set; } = true;
+
+    [Description("Sets if the plugin should automatically perform a softrestart once it downloaded an update the next round.\nDefault: true")]
+    public bool AutoRestart { get; set; } = true;
 
     [Description("Sets how many balls will spawn when using the balls command.\nDefault: 3")]
     public int BallAmount { get; set; } = 3;

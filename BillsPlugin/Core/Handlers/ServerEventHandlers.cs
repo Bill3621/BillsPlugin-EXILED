@@ -114,6 +114,11 @@ internal class ServerEventHandlers
         if (!Updater.UpdateAvailable) return;
         if (Updater.InstalledAutomatically)
         {
+            if (_config.AutoRestart)
+            {
+                BroadcastStaff("BillsPlugin: An update has been installed. Applied next round.");
+                return;
+            }
             BroadcastStaff("BillsPlugin: An update has been installed. Applied on next restart.");
         }
         else if (_config.AutoUpdate)

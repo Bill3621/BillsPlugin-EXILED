@@ -1,8 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Net;
+using System.Net.Http;
 using BillsPlugin.Core.Handlers;
 using Exiled.Loader;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json.Linq;
+using ServerOutput;
 
 namespace BillsPlugin;
 
@@ -13,7 +18,7 @@ public class Updater
     public static bool UpdateAvailable;
     public static bool InstalledAutomatically;
 
-    public static void CheckForUpdate()
+    public static async void CheckForUpdate()
     {
         if (!Plugin.Instance.Config.CheckForUpdates) return;
 
@@ -23,60 +28,47 @@ public class Updater
             return;
         }
 
-        var httpWebRequest =
-            (HttpWebRequest)WebRequest.Create(
-                "https://api.github.com/repos/Bill3621/BillsPlugin-EXILED/releases/latest");
-        httpWebRequest.Method = "GET";
-        httpWebRequest.Accept = "application/json";
-        httpWebRequest.ContentType = "application/json; charset=utf-8;";
-        httpWebRequest.UserAgent =
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+        var url = "https://api.github.com/repos/Bill3621/BillsPlugin-EXILED/releases/latest";
 
-
-
-        try
+        using (HttpClient client = new())
         {
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            var responseStream = httpResponse.GetResponseStream();
-            if (responseStream == null)
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("updater");
+            try
             {
-                Log.Error($"Response from GitHub is null. Response status: {httpResponse.StatusDescription}");
-                return;
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(responseBody);
+
+                var tagName = json["tag_name"].ToString();
+                NewestVersion = Version.Parse(tagName.ToLower().Replace("v", ""));
+
+                int compare = NewestVersion.CompareTo(Plugin.Instance.Version);
+                Log.Debug($"Current version: {Plugin.Instance.Version}");
+                Log.Debug($"Newest version: {NewestVersion}");
+                Log.Debug($"Compare result: {compare}");
+                if (compare == 0)
+                {
+                    Log.Debug("Plugin is up to date.");
+                    return;
+                }
+                else if (compare < 0)
+                {
+                    Log.Debug("Plugin is development build.");
+                    return;
+                }
+
+                UpdateAvailable = true;
+                PrintUpdateMessage();
+
+                downloadUrl = json["assets"][0]["browser_download_url"].ToString();
             }
-
-            using var streamReader = new StreamReader(responseStream);
-
-            var result = streamReader.ReadToEnd().Replace(" ", "");
-            Log.Debug("Parsing github result...");
-            NewestVersion = Version.Parse(Between(result, "tag_name\":\"", "\"").Replace("v", ""));
-
-            int compare = NewestVersion.CompareTo(Plugin.Instance.Version);
-            Log.Debug($"Current version: {Plugin.Instance.Version}");
-            Log.Debug($"Newest version: {NewestVersion}");
-            Log.Debug($"Compare result: {compare}");
-            if (compare == 0)
+            catch (Exception ex)
             {
-                Log.Debug("Plugin is up to date.");
-                return;
+                Log.Error("Error at checking for updates: ");
+                Log.Error(ex);
             }
-            else if (compare < 0)
-            {
-                Log.Debug("Plugin is development build.");
-                return;
-            }
-
-            // New version
-            UpdateAvailable = true;
-            PrintUpdateMessage();
-
-            // Update
-
-            downloadUrl = Between(result, "browser_download_url\":\"", "\"");
-
-        }
-        catch (Exception ex)
-        {
-            Log.Error("Error at checking for updates: " + ex.Message);
         }
 
         if (!UpdateAvailable) return;
@@ -93,6 +85,13 @@ public class Updater
             DownloadAndReplaceFile(downloadUrl, pluginPath);
             Log.Info("Plugin successfully updated!");
             InstalledAutomatically = true;
+            if (Plugin.Instance.Config.AutoRestart)
+            {
+                ServerEventHandlers.BroadcastStaff("BillsPlugin: An update has been installed. Applied next round.");
+                ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart;
+                ServerConsole.AddOutputEntry(default(ExitActionRestartEntry));
+                return;
+            }
             ServerEventHandlers.BroadcastStaff("BillsPlugin: An update has been installed. Applied on next restart.");
         }
         catch (Exception ex)
@@ -104,8 +103,7 @@ public class Updater
 
     private static void DownloadAndReplaceFile(string url, string filePath)
     {
-        using WebClient webClient = new();
-
+        using System.Net.WebClient webClient = new();
         string tempFilePath = Path.GetTempFileName();
 
         webClient.DownloadFile(url, tempFilePath);
@@ -123,7 +121,15 @@ public class Updater
             Log.Warn($"Current version: v{Plugin.Instance.Version}");
             if (InstalledAutomatically)
             {
-                Log.Warn("Update will apply next server restart.");
+                if (Plugin.Instance.Config.AutoRestart)
+                {
+                    Log.Warn("Update will apply next round.");
+                }
+                else
+                {
+
+                    Log.Warn("Update will apply next server restart.");
+                }
             }
             else
             {
@@ -136,12 +142,5 @@ public class Updater
         Log.Warn($"New version available: {NewestVersion}");
         Log.Warn($"Current version: v{Plugin.Instance.Version}");
         Log.Warn($"Download it here: {downloadUrl}");
-    }
-
-    public static string Between(string str, string firstString, string lastString)
-    {
-        var pos1 = str.IndexOf(firstString, StringComparison.Ordinal) + firstString.Length;
-        var pos2 = str.IndexOf(lastString, pos1, StringComparison.Ordinal);
-        return str.Substring(pos1, pos2 - pos1);
     }
 }
