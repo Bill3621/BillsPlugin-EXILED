@@ -1,7 +1,7 @@
 # Bills Plugin
 
 ## Overview
-This Plugin is a powerful addition to [SCP: Secret Laboratory](https://scpslgame.com/) that integrates seamlessly with the [EXILED plugin framework version 8.12.2](https://github.com/ExMod-Team/EXILED/releases/tag/v8.12.2). Designed to enhance gameplay, this plugin introduces a range of features and Quality of Life improvements, including:
+This Plugin is a powerful addition to [SCP: Secret Laboratory](https://scpslgame.com/) that integrates seamlessly with the [EXILED plugin framework version 8.13.1](https://github.com/ExMod-Team/EXILED/releases/tag/v8.13.1). Designed to enhance gameplay, this plugin introduces a range of features and Quality of Life improvements, including:
 
 - **Tesla Gate Modifications:** Temporarily disable Tesla Gates upon grenade impact, providing strategic advantages during gameplay.
 - **Role-Specific Tesla Interaction:** Prevent specific roles from triggering Tesla Gates, fostering a more controlled environment within the game.
