@@ -24,6 +24,6 @@ jobs:
         echo "Project folder: $PROJECT_FOLDER"
         echo "project_folder=$PROJECT_FOLDER" >> $GITHUB_ENV
     - name: Upload build artifact
-      uses: actions/upload-artifact@4.4.3
+      uses: actions/upload-artifact@v4.4.3
       with:
         path: ${{ env.project_folder }}\bin\Release\*.dll
