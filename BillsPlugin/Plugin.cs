@@ -25,7 +25,9 @@ public class Plugin : Plugin<Config>
 
     public override string Name => "BillsPlugin";
     public override string Author => "Bill (& ALEXWARELLC)";
-    public override Version Version => new(0, 1, 2, 2);
+    public override Version Version => new(0, 1, 2, 3);
+
+    public List<OpusComponent> Encoders = [];
 
     private Plugin()
     {
@@ -91,6 +93,18 @@ public class Plugin : Plugin<Config>
         _serverEvents = null;
         _mapEvents = null;
         _scp079Events = null;
+    }
+
+    public bool TryGetOpusComponent(ReferenceHub owner, ReferenceHub target, out OpusComponent result)
+    {
+        result = Encoders.FirstOrDefault(
+            opusComponent => opusComponent.Owner == owner && opusComponent.Target == target);
+        return result != null;
+    }
+
+    public void ClearOpusComponents()
+    {
+        Encoders.Clear();
     }
 
     public void InvokeScanFacility()

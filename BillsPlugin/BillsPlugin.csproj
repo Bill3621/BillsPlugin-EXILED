@@ -162,6 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Classes\OpusComponent.cs" />
     <Compile Include="Core\Classes\RoleSpawnBroadcast.cs" />
     <Compile Include="Core\Commands\ForceScan.cs" />
     <Compile Include="Core\Commands\Tesla.cs" />

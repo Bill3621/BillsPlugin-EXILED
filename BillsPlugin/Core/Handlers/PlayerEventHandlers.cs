@@ -14,6 +14,7 @@ using VoiceChat;
 using VoiceChat.Codec.Enums;
 using VoiceChat.Codec;
 using VoiceChat.Networking;
+using BillsPlugin.Core.Classes;
 
 namespace BillsPlugin.Core.Handlers;
 
@@ -175,9 +176,6 @@ internal class PlayerEventHandlers
                VoiceChatChannel.None;
     }
 
-    public OpusEncoder Encoder = new(OpusApplicationType.Voip);
-    public OpusDecoder Decoder = new();
-
     private VoiceMessage CloneMessageWithAdjustedVolume(VoiceMessage msg, ReferenceHub hub)
     {
         var clonedMsg = new VoiceMessage
@@ -191,14 +189,17 @@ internal class PlayerEventHandlers
 
         if (hub.GetRoleId() == RoleTypeId.Spectator || hub.GetRoleId() == RoleTypeId.Overwatch) return clonedMsg;
 
+        var player = EPlayer.Get(msg.Speaker);
+        var opusComponent = OpusComponent.Get(player.ReferenceHub, hub);
+
         var message = new float[48000];
-        Decoder.Decode(clonedMsg.Data, clonedMsg.DataLength, message);
+        opusComponent.Decoder.Decode(clonedMsg.Data, clonedMsg.DataLength, message);
 
         var volumeFactor = 1f - Vector3.Distance(msg.Speaker.transform.position, hub.transform.position) /
             _config.ProximityChatDistance;
         for (var i = 0; i < message.Length; i++) message[i] *= volumeFactor;
 
-        clonedMsg.DataLength = Encoder.Encode(message, clonedMsg.Data);
+        clonedMsg.DataLength = opusComponent.Encoder.Encode(message, clonedMsg.Data);
 
         return clonedMsg;
     }

@@ -97,6 +97,7 @@ internal class ServerEventHandlers
     public void OnRoundStarted()
     {
         PlayerEventHandlers.ProximityChatPlayers.Clear();
+        Plugin.Instance.ClearOpusComponents();
 
         if (_config.FacilityScanTime > 0)
             // Timeframe is a large value, so it's basically infinite long.
